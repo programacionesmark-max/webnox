@@ -1,512 +1,1143 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>WEBNOX | Arquitectura Digital</title>
-<meta name="description" content="Infraestructura web de alto rendimiento. Diseño y desarrollo premium.">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<title>WEBNOX® — Arquitectura Digital & Growth</title>
+<meta name="description" content="Estudio de ingeniería digital. Diseñamos ecosistemas web de alto rendimiento.">
 <meta name="theme-color" content="#050507">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
 <style>
-/* --- 1. CORE VARIABLES --- */
+/* --- VARIABLES & SISTEMA --- */
 :root {
-    --bg-void: #050507;
-    --text-bright: #ffffff;
-    --text-dim: #94a3b8;
-    
-    --neon-indigo: #6366f1;
-    --neon-cyan: #06b6d4;
-    --neon-pink: #ec4899;
-    --neon-green: #10b981;
-    
-    --glass-surface: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --blur: blur(20px);
-    
-    --font-main: 'Plus Jakarta Sans', sans-serif;
-    --font-code: 'JetBrains Mono', monospace;
-    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --bg: #050507;
+    --card-bg: rgba(255, 255, 255, 0.02);
+    --card-border: rgba(255, 255, 255, 0.06);
+    --card-hover: rgba(255, 255, 255, 0.04);
+    --txt-main: #f4f4f5;
+    --txt-muted: #a1a1aa;
+    --accent: #6366f1;
+    --accent-glow: rgba(99, 102, 241, 0.4);
+    --success: #10b981;
+    --font-body: 'Manrope', sans-serif;
+    --font-display: 'Space Grotesk', sans-serif;
+    --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1); 
+    --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-html { scroll-behavior: smooth; }
-body { background-color: var(--bg-void); color: var(--text-bright); font-family: var(--font-main); line-height: 1.6; overflow-x: hidden; }
-
-/* --- 2. ATMOSPHERE --- */
-.ambient-layer { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-.orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.3; animation: orbFloat 20s infinite alternate; }
-.orb-1 { top: -10%; left: -10%; width: 60vw; height: 60vw; background: var(--neon-indigo); }
-.orb-2 { bottom: -10%; right: -10%; width: 70vw; height: 70vw; background: var(--neon-pink); animation-delay: -5s; }
-.noise { position: fixed; inset: 0; opacity: 0.05; pointer-events: none; z-index: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-@keyframes orbFloat { 0% { transform: translate(0,0); } 100% { transform: translate(20px, -20px); } }
-
-/* --- 3. LAYOUT & TYPOGRAPHY --- */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
-.section { padding: 120px 0; border-bottom: 1px solid var(--glass-border); }
-
-h1 { font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 20px; background: linear-gradient(to bottom right, #fff 30%, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-h2 { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; }
-h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 10px; }
-.subtitle { color: var(--text-dim); font-size: 1.1rem; max-width: 600px; }
-.tag { display: inline-block; padding: 6px 12px; border-radius: 6px; font-family: var(--font-code); font-size: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); margin-bottom: 20px; color: var(--neon-indigo); }
-
-/* --- 4. BUTTONS --- */
-.btn-cosmic { 
-    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px; 
-    padding: 16px 32px; border-radius: 12px; font-weight: 700; color: #fff; text-decoration: none; border: none; cursor: pointer; 
-    background: linear-gradient(90deg, var(--neon-indigo), var(--neon-pink)); background-size: 200% 100%; 
-    animation: gradientMove 4s linear infinite; box-shadow: 0 0 30px rgba(99, 102, 241, 0.3); transition: transform 0.2s; 
-    white-space: nowrap;
+/* --- BASE & RESET --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+    background-color: var(--bg); color: var(--txt-main);
+    font-family: var(--font-body); overflow-x: hidden; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
-.btn-cosmic:active { transform: scale(0.96); }
-@keyframes gradientMove { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+/* Focus visible accesible */
+*:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 
-.btn-glass { 
-    padding: 14px 28px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); 
-    color: #fff; text-decoration: none; font-weight: 600; cursor: pointer; transition: 0.3s; 
-    display: inline-flex; justify-content: center; align-items: center; gap: 8px; white-space: nowrap;
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+/* --- EFECTOS AMBIENTALES --- */
+.noise-overlay {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9999; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
-.btn-glass:active { background: rgba(255,255,255,0.1); }
 
-/* --- 5. CARDS & GRIDS --- */
-.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-
-.card { 
-    background: var(--glass-surface); border: 1px solid var(--glass-border); backdrop-filter: var(--blur); 
-    border-radius: 24px; padding: 40px; display: flex; flex-direction: column; height: 100%; 
-    transition: 0.3s; position: relative; overflow: hidden; 
+.ambient-wrapper { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+.orb {
+    position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.3;
+    animation: floatOrb 20s infinite alternate ease-in-out;
 }
-.card:active { transform: scale(0.99); } /* Mobile touch feedback */
-.card.popular { border-color: rgba(99, 102, 241, 0.4); background: linear-gradient(to bottom, rgba(99, 102, 241, 0.08), transparent); }
+.orb-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, #4f46e5 0%, transparent 70%); }
+.orb-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: radial-gradient(circle, #2e1065 0%, transparent 70%); animation-delay: -5s; }
+@keyframes floatOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(50px, 50px) scale(1.1); } }
 
-.card-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 5px; }
-.card-price { font-size: 3rem; font-weight: 800; color: #fff; margin-bottom: 30px; line-height: 1; display: flex; align-items: baseline; gap: 5px; }
-.card-price span { font-size: 1rem; color: var(--text-dim); font-weight: 500; }
-.feat-list { list-style: none; margin-bottom: 30px; flex-grow: 1; padding: 0; }
-.feat-list li { display: flex; gap: 12px; font-size: 0.95rem; color: var(--text-dim); margin-bottom: 14px; align-items: flex-start; }
-.feat-list li i { color: var(--neon-indigo); font-size: 1.1rem; margin-top: 3px; flex-shrink: 0; }
+/* --- TYPO & COMPONENTES --- */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; }
+section { padding: 100px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
 
-/* --- 6. NAVIGATION --- */
-nav { 
-    position: fixed; top: 0; width: 100%; padding: 15px 0; z-index: 100; 
-    background: rgba(5,5,7,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); 
+h1, h2, h3, h4 { font-family: var(--font-display); color: #fff; font-weight: 600; }
+h1 {
+    font-size: clamp(2.8rem, 8vw, 6rem); 
+    line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 24px;
+    background: linear-gradient(180deg, #fff 20%, #71717a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
-.nav-inner { display: flex; justify-content: space-between; align-items: center; }
-.logo { font-size: 1.3rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
-.status-badge { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--neon-green); background: rgba(16, 185, 129, 0.1); padding: 5px 12px; border-radius: 100px; border: 1px solid rgba(16, 185, 129, 0.2); }
-.status-dot { width: 6px; height: 6px; background: var(--neon-green); border-radius: 50%; box-shadow: 0 0 8px var(--neon-green); animation: pulse 2s infinite; }
-@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+h2 { font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -0.03em; margin-bottom: 16px; }
+.subtitle { color: var(--txt-muted); font-size: 1.125rem; font-weight: 300; max-width: 580px; margin: 0 auto; line-height: 1.7; }
 
-/* --- 7. WIZARD & TABS --- */
-.wizard-container { background: linear-gradient(to right, rgba(99, 102, 241, 0.08), rgba(6, 182, 212, 0.03)); border: 1px solid var(--glass-border); border-radius: 24px; padding: 40px; margin-bottom: 60px; text-align: center; }
-.wizard-tabs { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 30px; }
-.tab-btn { padding: 12px 20px; border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.02); color: var(--text-dim); cursor: pointer; transition: 0.3s; font-weight: 600; font-size: 0.9rem; flex: 1 1 auto; }
-.tab-btn.active { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.4); }
-.wizard-result { margin-top: 30px; padding: 25px; background: rgba(0,0,0,0.3); border-radius: 16px; opacity: 0; transform: translateY(10px); transition: 0.3s; display: none; }
-.wizard-result.show { display: block; opacity: 1; transform: translateY(0); }
-
-/* --- 8. MODALS --- */
-dialog { 
-    width: 90%; max-width: 900px; max-height: 90vh; overflow-y: auto;
-    background: #0b0b0e; color: #fff; border: 1px solid var(--glass-border);
-    border-radius: 20px; padding: 0; margin: auto; 
-    opacity: 0; transform: scale(0.95); transition: 0.3s;
+.pill {
+    display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 100px;
+    background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2);
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 24px; color: #818cf8;
+    font-weight: 700; box-shadow: 0 0 20px rgba(99, 102, 241, 0.05);
 }
-dialog[open] { opacity: 1; transform: scale(1); }
-dialog::backdrop { background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); }
-.modal-header { padding: 25px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #0b0b0e; z-index: 10; }
-.modal-content { display: grid; grid-template-columns: 1.2fr 0.8fr; }
-.modal-left { padding: 30px; border-right: 1px solid var(--glass-border); }
-.modal-right { padding: 30px; background: rgba(0,0,0,0.2); }
-.spec-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--glass-border); font-size: 0.9rem; }
 
-/* --- 9. PORTFOLIO --- */
-.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 50px; }
-.project-card { position: relative; border-radius: 20px; overflow: hidden; height: 350px; border: 1px solid var(--glass-border); cursor: pointer; }
-.project-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: 0.4s; }
-.project-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #000 0%, transparent 80%); padding: 30px; display: flex; flex-direction: column; justify-content: flex-end; }
+/* Botones Mejorados */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 16px 36px; border-radius: 100px; font-weight: 600; text-decoration: none;
+    transition: all 0.4s var(--ease-elastic); cursor: pointer; border: 1px solid transparent; 
+    font-size: 0.95rem; position: relative; overflow: hidden; white-space: nowrap;
+}
+.btn-primary { background: #fff; color: #000; }
+.btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 40px -10px rgba(255,255,255,0.5); }
+.btn-primary:active { transform: translateY(-1px) scale(0.98); }
+.btn-primary[disabled] { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
 
-/* --- 10. COMPARISON TABLE --- */
-.table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 50px; border-radius: 16px; border: 1px solid var(--glass-border); }
-.compare-table { width: 100%; min-width: 600px; border-collapse: collapse; background: var(--glass-surface); }
-.compare-table th, .compare-table td { padding: 20px; text-align: left; border-bottom: 1px solid var(--glass-border); white-space: nowrap; }
-.compare-table th { background: rgba(255,255,255,0.05); font-weight: 700; color: #fff; }
-.compare-table td { color: var(--text-dim); }
+.btn-outline { background: transparent; border-color: rgba(255,255,255,0.15); color: #fff; backdrop-filter: blur(10px); }
+.btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.05); transform: translateY(-3px); }
 
-/* --- 11. ANIMATIONS --- */
-.reveal { opacity: 0; transform: translateY(30px); transition: 0.8s var(--ease); }
+/* Glass Cards Fluídas */
+.glass-card {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px;
+    padding: 40px; position: relative; overflow: hidden; 
+    transition: transform 0.5s var(--ease-smooth), background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); height: 100%; display: flex; flex-direction: column;
+}
+.glass-card:hover {
+    background: var(--card-hover); border-color: rgba(255,255,255,0.15);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+    transform: translateY(-8px);
+}
+
+/* --- NAV --- */
+nav {
+    position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000;
+    backdrop-filter: blur(16px) saturate(180%); background: rgba(5, 5, 7, 0.8);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.nav-content { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; letter-spacing: -1px; color: #fff; text-decoration:none; }
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-link { color: var(--txt-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
+.nav-link:hover { color: #fff; }
+
+.mobile-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; padding: 5px; }
+.mobile-menu {
+    position: fixed; inset: 0; background: rgba(5, 5, 7, 0.98); z-index: 2000;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 30px;
+    opacity: 0; pointer-events: none; transition: 0.4s var(--ease-smooth); 
+    backdrop-filter: blur(10px);
+}
+.mobile-menu.active { opacity: 1; pointer-events: all; }
+.mobile-menu a { font-family: var(--font-display); font-size: 2rem; color: #fff; text-decoration: none; }
+
+/* --- SECTIONS SPECIFIC --- */
+.logo-ticker-wrap { padding: 40px 0; border-block: 1px solid rgba(255,255,255,0.05); overflow: hidden; background: rgba(255,255,255,0.005); }
+.ticker-track { display: flex; gap: 60px; width: max-content; animation: scroll 40s linear infinite; }
+.slide { font-family: var(--font-display); font-weight: 600; color: #444; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; filter: grayscale(1); opacity: 0.7;}
+@keyframes scroll { to { transform: translateX(calc(-50% - 30px)); } }
+
+/* Grids Responsivos */
+.process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 60px; }
+.services-grid, .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 60px; }
+
+.process-step { position: relative; padding-top: 20px; }
+.process-step::before { content:''; position:absolute; top:0; left:0; width: 40px; height: 2px; background: var(--accent); }
+.step-num { font-family: var(--font-display); font-size: 3rem; color: rgba(255,255,255,0.05); font-weight: 700; position: absolute; top: 10px; right: 20px; }
+
+.feature-list { list-style: none; margin: 30px 0 0 0; }
+.feature-list li { display: flex; gap: 12px; font-size: 0.95rem; color: var(--txt-muted); margin-bottom: 14px; align-items: center; }
+.feature-list i { color: var(--accent); min-width: 20px; } 
+
+.pricing-controls { display: flex; justify-content: center; margin-bottom: 40px; }
+.toggle-container { background: rgba(0,0,0,0.3); padding: 4px; border-radius: 100px; border: 1px solid var(--card-border); display: inline-flex; position: relative; max-width: 100%; overflow-x: auto;}
+.toggle-btn { padding: 10px 24px; border-radius: 100px; border: none; background: transparent; color: var(--txt-muted); font-weight: 600; cursor: pointer; transition: 0.3s; z-index: 2; position: relative; font-size: 0.9rem; white-space: nowrap;}
+.toggle-btn.active { color: #fff; }
+.toggle-bg { position: absolute; top: 4px; left: 4px; height: calc(100% - 8px); background: var(--accent); border-radius: 100px; z-index: 1; transition: 0.4s var(--ease-elastic); }
+
+.pricing-grid { display: none; animation: fadeIn 0.6s var(--ease-smooth); }
+.pricing-grid.active-grid { display: grid; }
+
+.p-price { font-size: 2.8rem; font-weight: 700; font-family: var(--font-display); margin: 25px 0; color: #fff; line-height: 1; display:flex; flex-direction:column; align-items:flex-start; gap:5px;}
+.p-price .from-tag { font-size: 0.8rem; text-transform:uppercase; color: var(--accent); font-weight:700; letter-spacing:1px; margin-bottom:-5px; }
+.p-price span { font-size: 1rem; color: var(--txt-muted); font-weight: 400; vertical-align:middle; }
+
+/* FAQ */
+.faq-grid { max-width: 800px; margin: 0 auto; display: grid; gap: 15px; }
+.faq-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; overflow: hidden; transition: 0.3s; }
+.faq-head { padding: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; color: #fff; font-size: 0.95rem; line-height: 1.4;}
+.faq-body { max-height: 0; overflow: hidden; transition: 0.4s var(--ease-smooth); padding: 0 20px; color: var(--txt-muted); opacity: 0; font-size: 0.9rem;}
+.faq-item.open { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.2); }
+.faq-item.open .faq-body { padding-bottom: 20px; opacity: 1; }
+.faq-item.open .faq-head i { transform: rotate(180deg); color: var(--accent); }
+
+/* Contact Form */
+.contact-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.03), transparent 60%), #0a0a0c;
+    border: 1px solid var(--card-border); border-radius: 30px; padding: 60px; position: relative;
+}
+.form-input {
+    width: 100%; padding: 18px 20px; background: rgba(0,0,0,0.3); border: 1px solid var(--card-border);
+    border-radius: 12px; color: #fff; font-family: var(--font-body); transition: 0.3s; 
+    font-size: 16px; /* Importante 16px para evitar zoom en iOS */
+    margin-bottom: 20px;
+}
+.form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(99,102,241,0.1); outline: none; }
+textarea.form-input { min-height: 140px; resize: none; }
+.form-status { display: none; padding: 20px; border-radius: 12px; margin-top: 20px; text-align: center; }
+.form-status.success { display: block; background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.form-status.error { display: block; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+/* Footer */
+footer { padding: 60px 0 40px 0; border-top: 1px solid var(--card-border); background: #030304; }
+.footer-cols { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+.footer-col h4 { margin-bottom: 20px; color: #fff; font-size: 1rem; }
+.footer-col a { display: block; color: var(--txt-muted); text-decoration: none; margin-bottom: 12px; transition: 0.2s; font-size: 0.95rem; }
+.footer-col a:hover { color: #fff; transform: translateX(5px); }
+
+/* --- MODALS --- */
+.modal-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); z-index: 3000;
+    display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease-smooth);
+}
+.modal-backdrop.show { opacity: 1; pointer-events: all; }
+
+.modal-content {
+    background: #111; border: 1px solid rgba(255,255,255,0.1); width: 95%; max-width: 600px;
+    border-radius: 20px; padding: 30px; 
+    transform: scale(0.9); opacity: 0;
+    transition: transform 0.4s var(--ease-elastic), opacity 0.3s ease;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.8);
+    max-height: 90vh; overflow-y: auto;
+}
+.modal-backdrop.show .modal-content { transform: scale(1); opacity: 1; }
+
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+.close-modal { background: rgba(255,255,255,0.05); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; font-size: 1.2rem; }
+.close-modal:hover { background: rgba(255,255,255,0.2); }
+
+.modal-price-big { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: #fff; margin: 10px 0; }
+.modal-desc-long { color: var(--txt-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 25px; }
+
+/* =========================================
+   ESTILOS IA AVANZADA (NOX AI)
+   ========================================= */
+.ai-widget-container {
+    position: fixed; bottom: 30px; right: 30px; z-index: 4000;
+    font-family: var(--font-body);
+}
+.ai-orb-btn {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #818cf8, #4f46e5);
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.6), inset 0 0 10px rgba(255,255,255,0.5);
+    border: none; cursor: pointer; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s var(--ease-elastic);
+    animation: orbPulse 4s infinite ease-in-out;
+}
+.ai-orb-btn:hover { transform: scale(1.1); }
+.ai-orb-btn i { font-size: 28px; color: #fff; }
+@keyframes orbPulse { 0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.6); } 50% { box-shadow: 0 0 40px rgba(99,102,241,0.9); } }
+
+.ai-chat-window {
+    position: absolute; bottom: 80px; right: 0; width: 350px; height: 500px;
+    background: rgba(10, 10, 15, 0.9); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transform-origin: bottom right; transform: scale(0); opacity: 0;
+    transition: all 0.4s var(--ease-elastic);
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.8);
+}
+.ai-chat-window.active { transform: scale(1); opacity: 1; }
+
+.ai-header { padding: 15px 20px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; gap: 12px; }
+.ai-avatar { width: 35px; height: 35px; border-radius: 50%; background: var(--accent); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:0.8rem; position: relative;}
+.ai-status-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; position: absolute; bottom: 0; right: 0; border: 2px solid #000; }
+.ai-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+.ai-msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; position: relative; word-wrap: break-word; }
+.ai-msg.bot { align-self: flex-start; background: rgba(255,255,255,0.05); color: #e4e4e7; border-bottom-left-radius: 2px; border-left: 2px solid var(--accent); }
+.ai-msg.user { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 2px; }
+.typing-indicator { display: none; align-self: flex-start; background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 12px; gap: 4px; width: fit-content; }
+.typing-dot { width: 6px; height: 6px; background: #aaa; border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+.ai-input-area { padding: 15px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
+.ai-input { flex: 1; background: transparent; border: none; color: #fff; font-family: var(--font-body); outline: none; font-size: 16px; }
+.ai-send-btn { background: transparent; border: none; color: var(--accent); cursor: pointer; font-size: 1.2rem; transition: 0.2s; }
+
+/* Utils */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s var(--ease-smooth); }
 .reveal.active { opacity: 1; transform: translateY(0); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* --- 12. MOBILE OPTIMIZATION (CRITICAL) --- */
-@media (max-width: 768px) {
-    /* Layout */
+/* =========================================
+   MEDIA QUERIES (OPTIMIZACIÓN MÓVIL)
+   ========================================= */
+@media (max-width: 900px) {
+    /* Performance: Desactivar filtros pesados */
+    .noise-overlay { display: none; }
+    .orb { filter: blur(50px); }
+
+    /* Layout General */
     .container { padding: 0 20px; }
-    .section { padding: 80px 0; }
-    h1 { font-size: 2.8rem; margin-bottom: 15px; }
-    .subtitle { font-size: 1rem; }
+    h1 { font-size: 3rem; }
+    .nav-links { display: none; }
+    .mobile-toggle { display: block; }
     
-    /* Grid Collapse */
-    .grid-3, .grid-4, .portfolio-grid { grid-template-columns: 1fr; gap: 20px; }
+    /* Contact Form Vertical */
+    .contact-wrapper { grid-template-columns: 1fr; padding: 30px; gap: 40px; }
+    .contact-wrapper form div { grid-template-columns: 1fr !important; } 
     
-    /* Navigation */
-    .status-badge { display: none; } /* Hide on mobile to save space */
-    .nav-inner { padding: 0 5px; }
-    .logo { font-size: 1.2rem; }
+    /* Footer Vertical */
+    .footer-cols { grid-template-columns: 1fr; gap: 30px; text-align: left; }
     
-    /* Cards */
-    .card { padding: 30px 25px; min-height: auto; }
-    .project-card { height: 280px; }
+    /* Cards y Grids */
+    .pricing-grid { grid-template-columns: 1fr; }
+    .glass-card { padding: 25px; } 
+    .p-price { font-size: 2.5rem; }
     
-    /* Wizard */
-    .wizard-container { padding: 30px 20px; }
-    .wizard-tabs { gap: 8px; }
-    .tab-btn { font-size: 0.85rem; padding: 10px 15px; width: 48%; text-align: center; } /* 2 per row */
+    /* IA en Full Screen Móvil */
+    .ai-widget-container { right: 20px; bottom: 20px; }
+    .ai-chat-window {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        border-radius: 0; bottom: auto; right: auto;
+        transform-origin: bottom right; z-index: 5000;
+        background: #050507; 
+    }
+    .ai-header { padding-top: max(15px, env(safe-area-inset-top)); }
     
-    /* Modals */
-    dialog { width: 95%; max-height: 85vh; border-radius: 16px; }
-    .modal-content { grid-template-columns: 1fr; }
-    .modal-left { border-right: none; border-bottom: 1px solid var(--glass-border); padding: 25px; }
-    .modal-right { padding: 25px; }
-    .modal-header { padding: 20px; }
-    
-    /* Roadmap */
-    .roadmap { display: grid; grid-template-columns: 1fr; gap: 15px; }
-    
-    /* Tech Stack */
-    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+    /* Modales */
+    .modal-content { padding: 25px; width: 90%; }
+}
+
+@media (max-width: 400px) {
+    h1 { font-size: 2.4rem; }
+    .p-price { font-size: 2.2rem; }
+    .feature-list li { font-size: 0.85rem; }
+    .btn { padding: 14px 24px; font-size: 0.9rem; width: 100%; }
 }
 </style>
 </head>
+
 <body>
 
-<div class="ambient-layer">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-</div>
-<div class="noise"></div>
+<div class="noise-overlay"></div>
+<div class="ambient-wrapper"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
 
 <nav>
-    <div class="container nav-inner">
-        <a href="#" class="logo">WEBNOX<span style="color:var(--neon-indigo)">.</span></a>
-        <div style="display: flex; align-items: center; gap: 15px;">
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                DISPONIBLE
-            </div>
-            <a href="https://wa.me/34656610392?text=Hola,%20me%20interesa%20iniciar%20un%20proyecto." target="_blank" class="btn-glass" style="padding: 8px 16px; font-size: 0.85rem;">
-                <i class="ph ph-whatsapp-logo" style="color: #25D366; font-size: 1.1rem;"></i> <span style="display:none; display:md-block;">Chat</span>
-            </a>
+    <div class="container nav-content">
+        <a href="#" class="logo">WEBNOX®</a>
+        <div class="nav-links">
+            <a href="#process" class="nav-link">Proceso</a>
+            <a href="#services" class="nav-link">Servicios</a>
+            <a href="#pricing" class="nav-link">Inversión</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+            <a href="#contact" class="btn btn-primary" style="padding:10px 24px; font-size:0.9rem;">Área Privada</a>
         </div>
+        <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Menu"><i class="ph ph-list"></i></button>
     </div>
 </nav>
 
-<main>
+<div class="mobile-menu" id="mobileMenu">
+    <button onclick="toggleMenu()" style="position:absolute; top:30px; right:30px; background:none; border:none; color:#fff; font-size:2rem;" aria-label="Cerrar Menu"><i class="ph ph-x"></i></button>
+    <a href="#process" onclick="toggleMenu()">Proceso</a>
+    <a href="#pricing" onclick="toggleMenu()">Precios</a>
+    <a href="#contact" onclick="toggleMenu()" style="color:var(--accent)">Contacto</a>
+</div>
 
-    <section class="section container" style="min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-        <div class="reveal">
-            <div class="tag">System Integrity: 100%</div>
-            <h1>Ingeniería Digital<br>para el 1%.</h1>
-            <p class="subtitle" style="margin: 0 auto 30px auto;">
-                Abandonamos las plantillas para construir infraestructura digital de alto rendimiento. Velocidad, seguridad y propiedad absoluta del código.
+<main>
+    <section style="min-height:92vh; display:flex; align-items:center; padding-top: 80px;">
+        <div class="container reveal">
+            <span class="pill"><i class="ph-fill ph-circle" style="font-size:8px; margin-right:8px; color:var(--success)"></i> Disponible Q1 2026</span>
+            <h1>Ingeniería digital<br>para marcas élite.</h1>
+            <p class="subtitle" style="margin-bottom:40px; margin-left:0;">
+                Construimos activos digitales que generan autoridad y ventas. Sin plantillas, sin deuda técnica. Solo código limpio y estrategia de crecimiento.
             </p>
-            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; width: 100%;">
-                <a href="#build" class="btn-cosmic" style="flex: 1 1 auto; max-width: 200px;">Infraestructura</a>
-                <a href="#projects" class="btn-glass" style="flex: 1 1 auto; max-width: 200px;">Resultados</a>
+            <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <a href="#pricing" class="btn btn-primary">Ver Planes</a>
+                <a href="#contact" class="btn btn-outline">Agendar Auditoría</a>
+            </div>
+            
+            <div style="margin-top: 60px; display:flex; gap: 40px; opacity: 0.6; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px; width:100%; overflow-x:auto;">
+                <div style="min-width:max-content;"><strong style="color:#fff; display:block; font-size:1.5rem; font-family:var(--font-display);">+8000€</strong><span style="font-size:0.85rem">Generados para clientes</span></div>
+                <div style="min-width:max-content;"><strong style="color:#fff; display:block; font-size:1.5rem; font-family:var(--font-display);">100%</strong><span style="font-size:0.85rem">Google Lighthouse</span></div>
             </div>
         </div>
     </section>
 
-    <div class="container reveal" style="text-align: center; margin-bottom: 60px; opacity: 0.6; filter: grayscale(100%); transition: 0.5s;">
-        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;" onmouseover="this.parentElement.style.filter='grayscale(0%)'">
-            <span style="font-weight: 700; font-size: 1rem;">REACT</span>
-            <span style="font-weight: 700; font-size: 1rem;">NEXT.JS</span>
-            <span style="font-weight: 700; font-size: 1rem;">VERCEL</span>
-            <span style="font-weight: 700; font-size: 1rem;">STRIPE</span>
-            <span style="font-weight: 700; font-size: 1rem;">AWS</span>
+    <div class="logo-ticker-wrap">
+        <div class="ticker-track">
+            <div class="slide"><i class="ph-fill ph-google-logo"></i> GOOGLE</div>
+            <div class="slide"><i class="ph-fill ph-spotify-logo"></i> SPOTIFY</div>
+            <div class="slide"><i class="ph-fill ph-stripe-logo"></i> STRIPE</div>
+            <div class="slide"><i class="ph-fill ph-amazon-logo"></i> AMAZON</div>
+            <div class="slide"><i class="ph-fill ph-meta-logo"></i> META</div>
+            <div class="slide"><i class="ph-fill ph-microsoft-logo"></i> MICROSOFT</div>
+
+        <div class="slide"><i class="ph-fill ph-google-logo"></i> GOOGLE</div>
+        <div class="slide"><i class="ph-fill ph-spotify-logo"></i> SPOTIFY</div>
+        <div class="slide"><i class="ph-fill ph-stripe-logo"></i> STRIPE</div>
+        <div class="slide"><i class="ph-fill ph-amazon-logo"></i> AMAZON</div>
+        <div class="slide"><i class="ph-fill ph-meta-logo"></i> META</div>
+        <div class="slide"><i class="ph-fill ph-microsoft-logo"></i> MICROSOFT</div>
+
+        <div class="slide"><i class="ph-fill ph-google-logo"></i> GOOGLE</div>
+        <div class="slide"><i class="ph-fill ph-spotify-logo"></i> SPOTIFY</div>
+        <div class="slide"><i class="ph-fill ph-stripe-logo"></i> STRIPE</div>
+        <div class="slide"><i class="ph-fill ph-amazon-logo"></i> AMAZON</div>
+        <div class="slide"><i class="ph-fill ph-meta-logo"></i> META</div>
+        <div class="slide"><i class="ph-fill ph-microsoft-logo"></i> MICROSOFT</div>
+        
+        <div class="slide"><i class="ph-fill ph-google-logo"></i> GOOGLE</div>
+        <div class="slide"><i class="ph-fill ph-spotify-logo"></i> SPOTIFY</div>
+        <div class="slide"><i class="ph-fill ph-stripe-logo"></i> STRIPE</div>
+        <div class="slide"><i class="ph-fill ph-amazon-logo"></i> AMAZON</div>
+        <div class="slide"><i class="ph-fill ph-meta-logo"></i> META</div>
+        <div class="slide"><i class="ph-fill ph-microsoft-logo"></i> MICROSOFT</div>
+    </div>
+</div>
         </div>
     </div>
 
-    <section class="section container">
-        <div class="reveal">
-            <span style="color:var(--neon-indigo); font-weight:700;">LA REALIDAD</span>
-            <h2>Webnox vs. Tradicional</h2>
-            <div class="table-wrapper">
-                <table class="compare-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 40%;">Característica</th>
-                            <th style="width: 30%; color: var(--neon-indigo);">WEBNOX</th>
-                            <th style="width: 30%; color: #999;">Agencia WP</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Velocidad</strong><br><span style="font-size:0.8rem">Google Core Vitals</span></td>
-                            <td><i class="ph ph-lightning check"></i> &lt; 0.5s</td>
-                            <td><i class="ph ph-warning" style="color:#fbbf24"></i> > 3s</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Seguridad</strong><br><span style="font-size:0.8rem">Anti-Hackeo</span></td>
-                            <td><i class="ph ph-shield-check check"></i> Militar</td>
-                            <td><i class="ph ph-x cross"></i> Alta</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Propiedad</strong><br><span style="font-size:0.8rem">Código Fuente</span></td>
-                            <td><i class="ph ph-check check"></i> 100% Tú</td>
-                            <td><i class="ph ph-x cross"></i> "Alquilado"</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <section id="process">
+        <div class="container">
+            <div class="reveal">
+                <span class="pill">Metodología</span>
+                <h2>The Blueprint™</h2>
+                <p class="subtitle" style="margin:0">Nuestro sistema propietario para garantizar resultados predecibles.</p>
             </div>
-        </div>
-    </section>
-
-    <section id="projects" class="section container">
-        <div class="reveal">
-            <h2>Despliegues Recientes</h2>
-            <div class="portfolio-grid">
-                <div class="project-card" onclick="window.open('https://acontrabarra.es', '_blank')">
-                    <div class="project-bg" style="background-image: url('https://acontrabarra.es/wp-content/uploads/2023/06/DSC09525-scaled.jpg');"></div>
-                    <div class="project-overlay">
-                        <span class="tag" style="width: fit-content; margin-bottom: 10px;">HOSPITALITY</span>
-                        <h3>Acontrabarra</h3>
-                        <p style="color: #ccc; font-size: 0.9rem;">Experiencia inmersiva para gastronomía moderna.</p>
-                    </div>
+            <div class="process-grid reveal">
+                <div class="process-step glass-card" style="border:none; background:transparent; padding:20px 0;">
+                    <div class="step-num">01</div>
+                    <h3 style="margin-bottom:15px">Auditoría & Estrategia</h3>
+                    <p style="color:var(--txt-muted); font-size:0.95rem;">Analizamos tu mercado, tus competidores y tus cuellos de botella actuales. Definimos KPIs claros antes de escribir una línea de código.</p>
                 </div>
-                <div class="project-card">
-                    <div class="project-bg" style="background-image: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=800&auto=format&fit=crop');"></div>
-                    <div class="project-overlay">
-                        <span class="tag" style="width: fit-content; margin-bottom: 10px;">REAL ESTATE</span>
-                        <h3>Horizon Homes</h3>
-                        <p style="color: #ccc; font-size: 0.9rem;">Catálogo inmobiliario con carga instantánea.</p>
-                    </div>
+                <div class="process-step glass-card" style="border:none; background:transparent; padding:20px 0;">
+                    <div class="step-num">02</div>
+                    <h3 style="margin-bottom:15px">Diseño UX/UI</h3>
+                    <p style="color:var(--txt-muted); font-size:0.95rem;">Prototipado de alta fidelidad. Diseñamos pensando en la conversión y la identidad de marca.</p>
+                </div>
+                <div class="process-step glass-card" style="border:none; background:transparent; padding:20px 0;">
+                    <div class="step-num">03</div>
+                    <h3 style="margin-bottom:15px">Ingeniería</h3>
+                    <p style="color:var(--txt-muted); font-size:0.95rem;">Desarrollo sobre Next.js y React. Arquitectura "Headless" para una velocidad instantánea.</p>
+                </div>
+                <div class="process-step glass-card" style="border:none; background:transparent; padding:20px 0;">
+                    <div class="step-num">04</div>
+                    <h3 style="margin-bottom:15px">Launch & Growth</h3>
+                    <p style="color:var(--txt-muted); font-size:0.95rem;">Despliegue en servidores globales. Monitorización 24/7 e iteración continua basada en datos.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="container reveal">
-        <div class="wizard-container">
-            <h2 style="font-size: 1.8rem;">¿Tu objetivo?</h2>
-            <p style="color: var(--text-dim); margin-bottom: 20px;">Nuestra IA selecciona la arquitectura ideal.</p>
-            <div class="wizard-tabs">
-                <button class="tab-btn" onclick="recommend('sales')">Ventas</button>
-                <button class="tab-btn" onclick="recommend('brand')">Marca</button>
-                <button class="tab-btn" onclick="recommend('shop')">Tienda</button>
+    <section id="pricing">
+        <div class="container">
+            <div class="reveal" style="text-align:center; margin-bottom: 50px;">
+                <span class="pill">Transparencia</span>
+                <h2>Inversión Inteligente</h2>
+                <p class="subtitle">Elige entre una ejecución puntual o acompañamiento continuo.</p>
             </div>
-            <div id="rec-sales" class="wizard-result">
-                <h3 style="color:var(--neon-cyan)">Pack Landing Page</h3>
-                <p>Velocidad y foco. Diseñada para convertir.</p>
-                <button onclick="openModal('modal-landing')" class="btn-glass" style="margin-top:15px; border-color:var(--neon-cyan); color:var(--neon-cyan); width:100%;">Ficha Técnica (450€)</button>
+
+            <div class="pricing-controls reveal">
+                <div class="toggle-container">
+                    <div class="toggle-bg" id="switchBg"></div>
+                    <button class="toggle-btn active" onclick="switchPricing('one-time', this)">Proyectos (Único)</button>
+                    <button class="toggle-btn" onclick="switchPricing('sub', this)">Partners (Mes)</button>
+                </div>
             </div>
-            <div id="rec-brand" class="wizard-result">
-                <h3 style="color:var(--neon-indigo)">Pack Corporativo</h3>
-                <p>La opción sólida para proyectar confianza.</p>
-                <button onclick="openModal('modal-corp')" class="btn-glass" style="margin-top:15px; border-color:var(--neon-indigo); color:var(--neon-indigo); width:100%;">Ficha Técnica (750€)</button>
+
+            <div id="grid-onetime" class="pricing-grid active-grid reveal">
+                <div class="glass-card">
+                    <h3>Landing Page</h3>
+                    <div class="p-price"><span class="from-tag">Desde</span> 650€ <span>/único</span></div>
+                    <p style="font-size:0.9rem; color:var(--txt-muted); margin-bottom:20px;">Ideal para validar productos o captación de leads específica.</p>
+                    <ul class="feature-list" style="margin-bottom:auto">
+                        <li><i class="ph-fill ph-check-circle"></i> Diseño One-Page</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Copywriting Ventas</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Entrega Rápida</li>
+                    </ul>
+                    <button onclick="openServiceModal('landing')" class="btn btn-outline" style="width:100%; margin-top:30px;">
+                        Ver Detalles <i class="ph ph-plus"></i>
+                    </button>
+                </div>
+
+                <div class="glass-card" style="border-color:var(--accent); background: linear-gradient(180deg, rgba(99,102,241,0.1) 0%, rgba(0,0,0,0) 100%);">
+                    <div style="position:absolute; top:0; right:0; background:var(--accent); color:#fff; font-size:0.7rem; font-weight:800; padding:6px 16px; border-bottom-left-radius:16px;">POPULAR</div>
+                    <h3>Corporate</h3>
+                    <div class="p-price"><span class="from-tag">Desde</span> 1.4k€ <span>/único</span></div>
+                    <p style="font-size:0.9rem; color:var(--txt-muted); margin-bottom:20px;">Autoridad digital completa para empresas establecidas.</p>
+                    <ul class="feature-list" style="margin-bottom:auto">
+                        <li><i class="ph-fill ph-check-circle"></i> Web Completa (8 Secciones)</li>
+                        <li><i class="ph-fill ph-check-circle"></i> CMS Autogestionable</li>
+                        <li><i class="ph-fill ph-check-circle"></i> SEO On-Page Avanzado</li>
+                    </ul>
+                    <button onclick="openServiceModal('corporate')" class="btn btn-primary" style="width:100%; margin-top:30px;">
+                        Ver Detalles <i class="ph ph-plus"></i>
+                    </button>
+                </div>
+
+                <div class="glass-card">
+                    <h3>E-Commerce</h3>
+                    <div class="p-price"><span class="from-tag">Desde</span> 2.8k€ <span>/único</span></div>
+                    <p style="font-size:0.9rem; color:var(--txt-muted); margin-bottom:20px;">Tiendas robustas preparadas para escalar ventas.</p>
+                    <ul class="feature-list" style="margin-bottom:auto">
+                        <li><i class="ph-fill ph-check-circle"></i> Tienda a medida</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Pasarelas de Pago</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Gestión de Inventario</li>
+                    </ul>
+                    <button onclick="openServiceModal('ecommerce')" class="btn btn-outline" style="width:100%; margin-top:30px;">
+                        Ver Detalles <i class="ph ph-plus"></i>
+                    </button>
+                </div>
+
+                <div class="glass-card">
+                    <h3>SaaS / Web App</h3>
+                    <div class="p-price"><span class="from-tag">Desde</span> 4.5k€ <span>/único</span></div>
+                    <p style="font-size:0.9rem; color:var(--txt-muted); margin-bottom:20px;">Aplicaciones complejas con autenticación y bases de datos.</p>
+                    <ul class="feature-list" style="margin-bottom:auto">
+                        <li><i class="ph-fill ph-check-circle"></i> Dashboard de Usuarios</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Panel de Administración</li>
+                        <li><i class="ph-fill ph-check-circle"></i> API Rest / GraphQL</li>
+                    </ul>
+                    <button onclick="openServiceModal('webapp')" class="btn btn-outline" style="width:100%; margin-top:30px;">
+                        Ver Detalles <i class="ph ph-plus"></i>
+                    </button>
+                </div>
+
+                 <div class="glass-card" style="grid-column: 1 / -1; border-style:dashed; border-color:rgba(255,255,255,0.2);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+                        <div>
+                            <h3>Enterprise / A Medida</h3>
+                            <p style="font-size:0.9rem; color:var(--txt-muted); max-width:500px;">Para grandes corporaciones que requieren migración de legacy, múltiples plataformas o desarrollos de alta complejidad.</p>
+                        </div>
+                        <div style="text-align:right; min-width: 150px;">
+                             <div class="p-price" style="margin:0; font-size:2rem; align-items:flex-end;">A Presupuesto <span>Consultar condiciones</span></div>
+                        </div>
+                        <button onclick="openServiceModal('enterprise')" class="btn btn-primary">
+                            Consultar <i class="ph-bold ph-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-             <div id="rec-shop" class="wizard-result">
-                <h3 style="color:var(--neon-pink)">Pack E-Commerce</h3>
-                <p>Infraestructura completa para vender online.</p>
-                <button onclick="openModal('modal-shop')" class="btn-glass" style="margin-top:15px; border-color:var(--neon-pink); color:var(--neon-pink); width:100%;">Ficha Técnica (950€)</button>
+
+            <div id="grid-sub" class="pricing-grid reveal">
+                <div class="glass-card">
+                    <h3>Maintenance</h3>
+                    <div class="p-price"><span class="from-tag">Desde</span> 65€ <span>/mes</span></div>
+                    <ul class="feature-list" style="margin-bottom:auto">
+                        <li><i class="ph-fill ph-check-circle"></i> Hosting NVMe Privado</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Backups Diarios</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Seguridad Shield</li>
+                    </ul>
+                    <button onclick="openServiceModal('maintenance')" class="btn btn-outline" style="width:100%; margin-top:30px;">
+                        Ver Detalles <i class="ph ph-plus"></i>
+                    </button>
+                </div>
+                
+                 <div class="glass-card">
+                    <h3>SEO Authority</h3>
+                    <div class="p-price"><span class="from-tag">Desde</span> 850€ <span>/mes</span></div>
+                    <ul class="feature-list" style="margin-bottom:auto">
+                        <li><i class="ph-fill ph-check-circle"></i> Estrategia de Contenidos</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Linkbuilding Manual</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Informes de Keyword</li>
+                    </ul>
+                    <button onclick="openServiceModal('seo')" class="btn btn-outline" style="width:100%; margin-top:30px;">
+                        Ver Detalles <i class="ph ph-plus"></i>
+                    </button>
+                </div>
+
+                <div class="glass-card" style="border-color:var(--accent);">
+                    <h3>Growth Partner</h3>
+                    <div class="p-price"><span class="from-tag">Desde</span> 450€ <span>/mes</span></div>
+                    <ul class="feature-list" style="margin-bottom:auto">
+                        <li><i class="ph-fill ph-check-circle"></i> <strong>Incluye Plan Maintenance</strong></li>
+                        <li><i class="ph-fill ph-check-circle"></i> 5h Desarrollo/Diseño al mes</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Auditoría Mensual</li>
+                    </ul>
+                    <button onclick="openServiceModal('growth')" class="btn btn-primary" style="width:100%; margin-top:30px;">
+                        Ver Detalles <i class="ph ph-plus"></i>
+                    </button>
+                </div>
+
+                <div class="glass-card">
+                    <h3>CTO on Demand</h3>
+                    <div class="p-price"><span class="from-tag">Desde</span> 1.5k€ <span>/mes</span></div>
+                    <ul class="feature-list" style="margin-bottom:auto">
+                        <li><i class="ph-fill ph-check-circle"></i> Dirección Técnica</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Gestión de Equipos</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Estrategia Tech</li>
+                    </ul>
+                    <button onclick="openServiceModal('cto')" class="btn btn-outline" style="width:100%; margin-top:30px;">
+                        Ver Detalles <i class="ph ph-plus"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="build" class="section container">
-        <div class="reveal" style="margin-bottom: 40px;">
-            <span style="color:var(--neon-cyan); font-weight:700; text-transform:uppercase; font-size:0.8rem; letter-spacing:1px;">Fase 1</span>
-            <h2>Construcción</h2>
-        </div>
-        <div class="grid-3">
-            <div class="card reveal">
-                <i class="ph ph-rocket-launch" style="font-size:32px; color: var(--neon-cyan); margin-bottom:15px;"></i>
-                <div class="card-title">Landing Page</div>
-                <div class="card-price">450€</div>
-                <ul class="feat-list">
-                    <li><i class="ph ph-check"></i> Diseño One-Page</li>
-                    <li><i class="ph ph-check"></i> Copywriting</li>
-                    <li><i class="ph ph-check"></i> Carga &lt; 0.5s</li>
-                </ul>
-                <button onclick="openModal('modal-landing')" class="btn-glass" style="width: 100%; justify-content: center;">Ver Expediente</button>
-            </div>
-            <div class="card popular reveal" style="transition-delay: 0.1s;">
-                <div style="position: absolute; top:0; right:0; background:var(--neon-indigo); color:#fff; font-size:0.7rem; font-weight:700; padding:4px 10px; border-bottom-left-radius:10px;">TOP</div>
-                <i class="ph ph-buildings" style="font-size:32px; color: var(--neon-indigo); margin-bottom:15px;"></i>
-                <div class="card-title">Corporativa</div>
-                <div class="card-price">750€</div>
-                <ul class="feat-list">
-                    <li><i class="ph ph-check"></i> 6 Secciones</li>
-                    <li><i class="ph ph-check"></i> CMS Propio</li>
-                    <li><i class="ph ph-check"></i> SEO Técnico</li>
-                </ul>
-                <button onclick="openModal('modal-corp')" class="btn-cosmic" style="width: 100%; justify-content: center;">Ver Expediente</button>
-            </div>
-            <div class="card reveal" style="transition-delay: 0.2s;">
-                <i class="ph ph-shopping-bag" style="font-size:32px; color: var(--neon-pink); margin-bottom:15px;"></i>
-                <div class="card-title">E-Commerce</div>
-                <div class="card-price">950€</div>
-                <ul class="feat-list">
-                    <li><i class="ph ph-check"></i> 50 Productos</li>
-                    <li><i class="ph ph-check"></i> Pasarelas Pago</li>
-                    <li><i class="ph ph-check"></i> Panel Pedidos</li>
-                </ul>
-                <button onclick="openModal('modal-shop')" class="btn-glass" style="width: 100%; justify-content: center;">Ver Expediente</button>
+    <section id="contact">
+        <div class="container reveal">
+            <div class="contact-wrapper">
+                <div>
+                    <h2>Hablemos de<br>tu visión.</h2>
+                    <p class="subtitle" style="margin: 20px 0 40px 0; margin-left:0;">Estamos listos para escalar tu negocio. Rellena el formulario y recibirás una propuesta inicial en menos de 24h.</p>
+                    
+                    <div style="display:flex; flex-direction:column; gap:24px;">
+                        <div style="display:flex; align-items:center; gap:16px; color:#fff;">
+                            <div style="background:rgba(255,255,255,0.05); width:50px; height:50px; display:flex; align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,0.1); flex-shrink:0;"><i class="ph-fill ph-envelope-simple" style="font-size:1.2rem"></i></div>
+                            <div style="overflow:hidden;">
+                                <div style="font-size:0.8rem; color:var(--txt-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">Email Directo</div>
+                                <div style="font-size:1.1rem; font-weight:500; word-break:break-all;">programaciones.mark@gmail.com</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display:flex; align-items:center; gap:16px; color:#fff;">
+                            <div style="background:rgba(255,255,255,0.05); width:50px; height:50px; display:flex; align-items:center; justify-content:center; border-radius:50%; border:1px solid rgba(255,255,255,0.1); flex-shrink:0;">
+                                <i class="ph-fill ph-whatsapp-logo" style="font-size:1.2rem"></i>
+                            </div>
+                            <div>
+                                <div style="font-size:0.8rem; color:var(--txt-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">WhatsApp / Teléfono</div>
+                                <div style="font-size:1.1rem; font-weight:500;">
+                                    <a href="tel:656610392" style="color:#fff; text-decoration:none;">656 610 392</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div>
+                    <form id="contactForm" action="https://formspree.io/f/xgvnpjpp" method="POST">
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+                            <input type="text" name="nombre" class="form-input" placeholder="Nombre" required aria-label="Nombre">
+                            <input type="email" name="email" class="form-input" placeholder="Email profesional" required aria-label="Email">
+                        </div>
+                        <input type="text" name="empresa" class="form-input" placeholder="Empresa / Web actual" aria-label="Empresa">
+                        <textarea name="mensaje" class="form-input" placeholder="Cuéntanos sobre tu proyecto..." required aria-label="Mensaje"></textarea>
+                        
+                        <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%">
+                            <span>Enviar Solicitud</span> <i class="ph-bold ph-arrow-right"></i>
+                        </button>
+                    </form>
+                    
+                    <div id="statusSuccess" class="form-status success">
+                        <strong>¡Mensaje enviado con éxito!</strong> Nuestro equipo de ingeniería analizará tu caso y te contactaremos en breve.
+                    </div>
+                    <div id="statusError" class="form-status error">
+                        <strong>Error al enviar.</strong> Por favor, verifica tu conexión o contáctanos directamente por email.
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
-    <section id="grow" class="section container">
-        <div class="reveal" style="margin-bottom: 40px;">
-            <span style="color:var(--neon-pink); font-weight:700; text-transform:uppercase; font-size:0.8rem; letter-spacing:1px;">Fase 2</span>
-            <h2>Suscripciones</h2>
-        </div>
-        <div class="grid-3">
-            <div class="card reveal">
-                <div class="card-title">Mantenimiento</div>
-                <div class="card-price">49€ <span>/mes</span></div>
-                <ul class="feat-list">
-                    <li><i class="ph ph-shield-check"></i> Hosting Vercel Edge</li>
-                    <li><i class="ph ph-check"></i> Dominio y SSL</li>
-                    <li><i class="ph ph-check"></i> Soporte Email</li>
-                </ul>
-                <a href="mailto:JMarkestt@proton.me?subject=Alta%20Suscripcion%20Mantenimiento%2049eur" class="btn-glass" style="width: 100%; justify-content: center;">Suscribir</a>
-            </div>
-            <div class="card popular reveal">
-                <div class="card-title" style="color: var(--neon-pink);">Growth Partner</div>
-                <div class="card-price">149€ <span>/mes</span></div>
-                <ul class="feat-list">
-                    <li><i class="ph ph-check"></i> <strong>Todo Mantenimiento</strong></li>
-                    <li><i class="ph ph-code"></i> 3h Desarrollo / Mes</li>
-                    <li><i class="ph ph-whatsapp-logo"></i> Soporte WhatsApp</li>
-                </ul>
-                <a href="mailto:JMarkestt@proton.me?subject=Alta%20Suscripcion%20Growth%20149eur" class="btn-cosmic" style="width: 100%; justify-content: center;">Suscribir</a>
-            </div>
-            <div class="card reveal">
-                <div class="card-title" style="color: var(--neon-green);">Scale Up</div>
-                <div class="card-price">299€ <span>/mes</span></div>
-                <ul class="feat-list">
-                    <li><i class="ph ph-check"></i> <strong>Todo Growth</strong></li>
-                    <li><i class="ph ph-article"></i> Blog SEO Mensual</li>
-                    <li><i class="ph ph-strategy"></i> Reunión Estratégica</li>
-                </ul>
-                <a href="mailto:JMarkestt@proton.me?subject=Alta%20Suscripcion%20ScaleUp%20299eur" class="btn-glass" style="width: 100%; justify-content: center;">Suscribir</a>
-            </div>
-        </div>
-    </section>
-
-    <footer style="background: #000; padding: 60px 0; border-top: 1px solid var(--glass-border);">
-        <div class="container" style="text-align: center;">
-            <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 20px;">WEBNOX.</div>
-            <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 30px;">
-                 <a href="mailto:JMarkestt@proton.me" style="color:var(--text-dim); text-decoration:none;">Email</a>
-                 <a href="tel:656610392" style="color:var(--text-dim); text-decoration:none;">Teléfono</a>
-            </div>
-            <div style="color: var(--text-dim); font-size: 0.9rem;">
-                © 2025 WEBNOX | ALICANTE
-            </div>
-        </div>
-    </footer>
 
 </main>
 
-<dialog id="modal-corp">
-    <div class="modal-header">
-        <h3 style="margin:0;">Expediente: Corporativa</h3>
-        <button onclick="closeModal('modal-corp')" style="background:none; border:none; color:#fff; font-size:24px;"><i class="ph ph-x"></i></button>
-    </div>
-    <div class="modal-content">
-        <div class="modal-left">
-            <h4 style="color:var(--neon-indigo); margin-bottom:15px;">Descripción</h4>
-            <p style="color:var(--text-dim); font-size:0.95rem; margin-bottom:20px;">Desarrollo completo de plataforma digital para posicionamiento líder. CMS incluido.</p>
-            <ul class="feat-list" style="margin-bottom:0;">
-                <li><i class="ph ph-check-circle"></i> Diseño UI adaptable</li>
-                <li><i class="ph ph-check-circle"></i> Panel CMS</li>
-                <li><i class="ph ph-check-circle"></i> Optimización Next-Gen</li>
-            </ul>
+<footer>
+    <div class="container">
+        <div class="footer-cols">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom:24px;">WEBNOX®</div>
+                <p style="color:var(--txt-muted); margin-bottom:24px; max-width:250px; font-size:0.9rem; line-height:1.6;">Arquitectura digital privada para marcas que definen el futuro.</p>
+                <div style="display:flex; gap:16px;">
+                    <a href="https://www.instagram.com/webnox.online/" target="_blank" aria-label="Instagram" style="color:#fff;"><i class="ph-fill ph-instagram-logo" style="font-size:1.5rem"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Servicios</h4>
+                <a href="#services">Desarrollo Web</a>
+                <a href="#services">Diseño UI/UX</a>
+                <a href="#services">SEO Técnico</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="javascript:void(0)" onclick="openLegalModal('Aviso Legal')">Aviso Legal</a>
+                <a href="javascript:void(0)" onclick="openLegalModal('Privacidad')">Política de Privacidad</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <a href="mailto:programaciones.mark@gmail.com" style="word-break: break-all;">programaciones.mark@gmail.com</a>
+                <span style="color:var(--txt-muted); font-size:0.9rem;">Madrid, España</span>
+            </div>
         </div>
-        <div class="modal-right">
-            <div class="spec-row"><span style="color:var(--text-dim)">Tech</span><span>Next.js</span></div>
-            <div class="spec-row"><span style="color:var(--text-dim)">Tiempo</span><span>14 Días</span></div>
-            <div class="spec-row"><span style="color:var(--text-dim)">Inversión</span><span style="color:var(--neon-indigo); font-size:1.2rem;">750€</span></div>
-            <a href="mailto:JMarkestt@proton.me?subject=INTERESADO%20PACK%20CORPORATIVA%20750eur" class="btn-cosmic" style="width:100%; margin-top:20px; justify-content:center;">Solicitar</a>
+        <div style="border-top:1px solid var(--card-border); padding-top:30px; display:flex; justify-content:space-between; color:var(--txt-muted); font-size:0.8rem; flex-wrap:wrap; gap:10px;">
+            <div>© 2026 WEBNOX Digital. Todos los derechos reservados.</div>
+            <div>All systems operational <span style="display:inline-block; width:8px; height:8px; background:var(--success); border-radius:50%; margin-left:6px;"></span></div>
         </div>
     </div>
-</dialog>
+</footer>
 
-<dialog id="modal-landing">
-    <div class="modal-header">
-        <h3 style="margin:0;">Expediente: Landing</h3>
-        <button onclick="closeModal('modal-landing')" style="background:none; border:none; color:#fff; font-size:24px;"><i class="ph ph-x"></i></button>
-    </div>
+<div id="serviceModal" class="modal-backdrop">
     <div class="modal-content">
-        <div class="modal-left">
-            <h4 style="color:var(--neon-cyan); margin-bottom:15px;">Conversión Pura</h4>
-            <p style="color:var(--text-dim); font-size:0.95rem; margin-bottom:20px;">Una sola página diseñada matemáticamente para convertir tráfico en clientes.</p>
-            <ul class="feat-list" style="margin-bottom:0;">
-                <li><i class="ph ph-check-circle"></i> Estructura persuasiva</li>
-                <li><i class="ph ph-check-circle"></i> Carga instantánea</li>
-            </ul>
+        <div class="modal-header">
+            <div>
+                <span class="modal-tag" id="sm-tag">SERVICIO</span>
+                <h3 id="sm-title" style="font-size:1.5rem; margin:0;">Titulo del Servicio</h3>
+                <div class="modal-price-big" id="sm-price">0€</div>
+            </div>
+            <button class="close-modal" onclick="closeServiceModal()" aria-label="Cerrar"><i class="ph-bold ph-x"></i></button>
         </div>
-        <div class="modal-right">
-            <div class="spec-row"><span style="color:var(--text-dim)">Tech</span><span>React Static</span></div>
-            <div class="spec-row"><span style="color:var(--text-dim)">Tiempo</span><span>5 Días</span></div>
-            <div class="spec-row"><span style="color:var(--text-dim)">Inversión</span><span style="color:var(--neon-cyan); font-size:1.2rem;">450€</span></div>
-            <a href="mailto:JMarkestt@proton.me?subject=INTERESADO%20PACK%20LANDING%20450eur" class="btn-glass" style="width:100%; margin-top:20px; justify-content:center;">Solicitar</a>
+        
+        <div id="sm-desc" class="modal-desc-long">
+            Descripción larga del servicio aquí...
         </div>
-    </div>
-</dialog>
 
-<dialog id="modal-shop">
-    <div class="modal-header">
-        <h3 style="margin:0;">Expediente: Shop</h3>
-        <button onclick="closeModal('modal-shop')" style="background:none; border:none; color:#fff; font-size:24px;"><i class="ph ph-x"></i></button>
-    </div>
-    <div class="modal-content">
-        <div class="modal-left">
-            <h4 style="color:var(--neon-pink); margin-bottom:15px;">Ventas 24/7</h4>
-            <p style="color:var(--text-dim); font-size:0.95rem; margin-bottom:20px;">Infraestructura robusta para vender productos físicos o digitales.</p>
-            <ul class="feat-list" style="margin-bottom:0;">
-                <li><i class="ph ph-check-circle"></i> Stripe/PayPal</li>
-                <li><i class="ph ph-check-circle"></i> Gestión Pedidos</li>
+        <h4 style="margin-bottom:15px; font-size:1rem; color:#fff;" id="sm-list-title">Incluye todo lo siguiente:</h4>
+        <ul class="modal-features-grid" id="sm-features">
             </ul>
+
+        <a href="#contact" id="sm-cta" onclick="closeServiceModal()" class="btn btn-primary" style="width:100%; justify-content:center;">
+            Solicitar este Plan <i class="ph-bold ph-arrow-right"></i>
+        </a>
+    </div>
+</div>
+
+<div id="legalModal" class="modal-backdrop">
+    <div class="modal-content" style="max-width:500px">
+        <div style="display:flex; justify-content:space-between; margin-bottom:24px; align-items:center;">
+            <h3 id="legalTitle" style="margin:0;">Legal</h3>
+            <button class="close-modal" onclick="closeLegalModal()" aria-label="Cerrar"><i class="ph-bold ph-x"></i></button>
         </div>
-        <div class="modal-right">
-            <div class="spec-row"><span style="color:var(--text-dim)">Tech</span><span>Next.js Shop</span></div>
-            <div class="spec-row"><span style="color:var(--text-dim)">Tiempo</span><span>20 Días</span></div>
-            <div class="spec-row"><span style="color:var(--text-dim)">Inversión</span><span style="color:var(--neon-pink); font-size:1.2rem;">950€</span></div>
-            <a href="mailto:JMarkestt@proton.me?subject=INTERESADO%20PACK%20ECOMMERCE%20950eur" class="btn-glass" style="width:100%; margin-top:20px; justify-content:center;">Solicitar</a>
+        <div style="color:var(--txt-muted); font-size:0.95rem; line-height:1.6;">
+            <p style="margin-bottom:16px;"><strong>1. Identificación:</strong> WEBNOX DIGITAL, operando bajo la legislación española vigente.</p>
+            <p style="margin-bottom:16px;"><strong>2. Protección de Datos:</strong> Sus datos serán tratados conforme al RGPD exclusivamente para la gestión comercial solicitada. No compartimos datos con terceros.</p>
+            <p><strong>3. Propiedad Intelectual:</strong> Todo el código, diseño y activos visuales mostrados son propiedad intelectual de WEBNOX hasta la cesión formal de derechos al cliente.</p>
         </div>
     </div>
-</dialog>
+</div>
+
+<div class="ai-widget-container">
+    <button class="ai-orb-btn" onclick="toggleAIChat()" aria-label="Abrir asistente IA">
+        <i class="ph-fill ph-sparkle"></i>
+    </button>
+    <div class="ai-chat-window" id="aiChatWindow">
+        <div class="ai-header">
+            <div class="ai-avatar">NOX
+                <div class="ai-status-dot"></div>
+            </div>
+            <div style="flex:1;">
+                <div style="font-size:0.95rem; font-weight:600; color:#fff;">NOX Assistant</div>
+                <div style="font-size:0.75rem; color:var(--success);">En línea</div>
+            </div>
+            <button onclick="toggleAIChat()" style="background:none; border:none; color:rgba(255,255,255,0.5); cursor:pointer;" aria-label="Cerrar chat"><i class="ph-bold ph-x"></i></button>
+        </div>
+        
+        <div class="ai-messages" id="aiMessages">
+            <div class="ai-msg bot">
+                Hola. Soy la IA de WEBNOX. ¿En qué puedo ayudarte a escalar tu negocio hoy?
+            </div>
+            <div class="typing-indicator" id="aiTyping">
+                <div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>
+            </div>
+        </div>
+        
+        <div class="ai-input-area">
+            <input type="text" class="ai-input" id="aiUserInput" placeholder="Escribe tu consulta..." onkeypress="handleAIEnter(event)" aria-label="Mensaje para IA">
+            <button class="ai-send-btn" onclick="sendAIMessage()" aria-label="Enviar mensaje"><i class="ph-fill ph-paper-plane-right"></i></button>
+        </div>
+    </div>
+</div>
 
 <script>
-    // MODALS
-    function openModal(id) { document.getElementById(id).showModal(); }
-    function closeModal(id) { document.getElementById(id).close(); }
-    document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', (e) => {
-        const r = d.getBoundingClientRect();
-        if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) d.close();
-    }));
+    // --- DATOS DE LOS SERVICIOS (CONTENIDO COMPLETO) ---
+    const serviceData = {
+        landing: {
+            title: "Landing Page High-Perf",
+            price: "Desde 650€",
+            tag: "VALIDACIÓN",
+            desc: "Diseñada obsesivamente para la conversión. Una página única que elimina distracciones y guía al usuario hacia una única acción: comprar o contactar. Perfecta para campañas de Paid Media donde cada clic cuesta dinero.",
+            features: [
+                "Diseño UX/UI exclusivo (Nada de plantillas)",
+                "Desarrollo en React/Next.js (Carga < 1s)",
+                "Copywriting persuasivo (Neuromarketing)",
+                "Integración con Email Marketing (Mailchimp/ActiveCampaign)",
+                "Configuración de Pixel de Meta/Google Ads",
+                "Formulario de contacto avanzado con validación",
+                "Adaptación móvil 'Thumb-friendly'",
+                "Entrega Express en 7 días hábiles"
+            ]
+        },
+        corporate: {
+            title: "Web Corporativa",
+            price: "Desde 1.400€",
+            tag: "POPULAR",
+            desc: "Tu sede digital. Construimos ecosistemas que transmiten autoridad instantánea. Una web multipágina escalable que posiciona tu marca por encima de competidores con webs genéricas.",
+            features: [
+                "Hasta 8 secciones diseñadas a medida",
+                "Gestor de contenidos (CMS) fácil de usar",
+                "Animaciones sutiles y micro-interacciones premium",
+                "SEO Técnico avanzado (Schema Markup & Core Vitals)",
+                "Integración con CRM (Hubspot/Salesforce)",
+                "Blog corporativo optimizado para SEO",
+                "Cumplimiento RGPD/Cookies avanzado",
+                "Soporte post-lanzamiento de 30 días"
+            ]
+        },
+        ecommerce: {
+            title: "E-Commerce Pro",
+            price: "Desde 2.800€",
+            tag: "VENTAS",
+            desc: "Infraestructura de ventas seria. No usamos configuraciones limitadas; construimos experiencias de compra fluidas diseñadas para maximizar el ticket medio y la recurrencia.",
+            features: [
+                "Diseño de tienda orientado a conversión (CRO)",
+                "Pasarelas de pago seguras (Stripe/PayPal/Redsys)",
+                "Panel de administración de pedidos e inventario",
+                "Área de clientes con historial y wishlist",
+                "Correos transaccionales personalizados",
+                "Filtros avanzados de búsqueda instantánea",
+                "Integración con logística de envíos automatizada",
+                "Formación al equipo de gestión"
+            ]
+        },
+        webapp: {
+            title: "SaaS / Web App",
+            price: "Desde 4.500€",
+            tag: "COMPLEX",
+            desc: "Transformamos ideas complejas en software funcional. Si necesitas que tus usuarios se registren, gestionen datos o paguen suscripciones, desarrollamos la solución a medida.",
+            features: [
+                "Autenticación segura (Auth.js / Supabase / Firebase)",
+                "Bases de datos en tiempo real",
+                "Paneles de administración (Dashboards de métricas)",
+                "Sistemas de suscripción recurrente (Stripe Subs)",
+                "APIs personalizadas RESTful o GraphQL",
+                "Roles y permisos de usuarios granulares",
+                "Arquitectura escalable en la nube (AWS/Vercel)",
+                "Documentación técnica completa"
+            ]
+        },
+        enterprise: {
+            title: "Enterprise Custom",
+            price: "A Presupuesto",
+            tag: "UNLIMITED",
+            desc: "Ingeniería digital de gran escala. Soluciones para corporaciones que requieren migración de sistemas legacy, integraciones complejas con ERPs propietarios o desarrollos multiplataforma.",
+            features: [
+                "Consultoría de arquitectura de sistemas",
+                "Desarrollo de equipos dedicados (Squads)",
+                "Migración de datos masiva y segura",
+                "Auditorías de seguridad y Pentesting",
+                "SLA de servicio garantizado (99.9%)",
+                "Soporte on-site si se requiere",
+                "Integraciones SAP / Oracle / Salesforce"
+            ]
+        },
+        maintenance: {
+            title: "Maintenance Shield",
+            price: "Desde 65€/mes",
+            tag: "SEGURIDAD",
+            desc: "La tranquilidad absoluta. Tu web es un activo vivo; nosotros nos encargamos de que nunca se caiga, siempre sea rápida y esté protegida contra amenazas antes de que ocurran.",
+            features: [
+                "Hosting NVMe de alta velocidad incluido",
+                "Certificados SSL Wildcard Automáticos",
+                "Copias de seguridad diarias en nube externa",
+                "Actualizaciones de plugins y core del sistema",
+                "Protección Firewall contra ataques DDoS",
+                "Informe mensual de estado y uptime"
+            ]
+        },
+        seo: {
+            title: "SEO Authority",
+            price: "Desde 850€/mes",
+            tag: "TRÁFICO",
+            desc: "Dominio orgánico del mercado. No hacemos 'magia', aplicamos ingeniería inversa al algoritmo de Google para colocar tu marca donde buscan tus clientes.",
+            features: [
+                "Auditoría SEO técnica inicial profunda",
+                "Estrategia de Keyword Research y clusters temáticos",
+                "4 Artículos de blog de alta autoridad al mes",
+                "Linkbuilding Manual (Enlaces de calidad)",
+                "Optimización de Google My Business / Maps",
+                "Reportes de ranking mensuales transparentes",
+                "Optimización constante de Core Web Vitals"
+            ]
+        },
+        growth: {
+            title: "Growth Partner",
+            price: "Desde 450€/mes",
+            tag: "CRECIMIENTO",
+            desc: "Tu departamento digital externalizado. No solo mantenemos la web, la mejoramos mes a mes basándonos en datos reales de uso para aumentar la tasa de conversión.",
+            features: [
+                "Todo lo incluido en el plan Maintenance Shield",
+                "5 horas mensuales de desarrollo o diseño a demanda",
+                "Implementación de nuevas Landing Pages",
+                "Tests A/B continuos para mejorar ventas",
+                "Auditoría mensual de analítica y SEO",
+                "Soporte prioritario por WhatsApp/Slack",
+                "Consultoría estratégica trimestral"
+            ]
+        },
+        cto: {
+            title: "CTO on Demand",
+            price: "Desde 1.500€/mes",
+            tag: "EXECUTIVE",
+            desc: "Dirección técnica ejecutiva. Ideal para startups o empresas en expansión que necesitan visión tecnológica senior sin el coste de contratar un ejecutivo a tiempo completo.",
+            features: [
+                "Definición de roadmap tecnológico a 12 meses",
+                "Gestión y contratación de equipos de desarrollo",
+                "Revisión de código y arquitectura de software",
+                "Selección de stack tecnológico óptimo",
+                "Interlocución técnica con inversores/partners",
+                "Disponibilidad para reuniones de consejo"
+            ]
+        }
+    };
 
-    // WIZARD
-    function recommend(type) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        document.querySelectorAll('.wizard-result').forEach(el => el.classList.remove('show'));
-        const id = 'rec-' + type;
-        const el = document.getElementById(id);
-        if(el) setTimeout(() => el.classList.add('show'), 50);
+    // --- LÓGICA DE MODALES ---
+    const serviceModal = document.getElementById('serviceModal');
+    const legalModal = document.getElementById('legalModal');
+
+    function openServiceModal(serviceKey) {
+        const data = serviceData[serviceKey];
+        if(!data) return;
+
+        // Rellenar datos básicos
+        document.getElementById('sm-title').innerText = data.title;
+        document.getElementById('sm-price').innerText = data.price;
+        document.getElementById('sm-desc').innerText = data.desc;
+        document.getElementById('sm-tag').innerText = data.tag;
+        
+        // Ajuste especial para Enterprise
+        const ctaBtn = document.getElementById('sm-cta');
+        if (serviceKey === 'enterprise') {
+             ctaBtn.innerHTML = `Agendar Reunión <i class="ph-bold ph-phone"></i>`;
+        } else {
+             ctaBtn.innerHTML = `Solicitar este Plan <i class="ph-bold ph-arrow-right"></i>`;
+        }
+
+        // Generar lista
+        const listContainer = document.getElementById('sm-features');
+        listContainer.innerHTML = ""; // Limpiar anterior
+        data.features.forEach(feat => {
+            const li = document.createElement('li');
+            li.innerHTML = `<i class="ph-fill ph-check-circle" style="color:var(--accent); min-width:20px;"></i> ${feat}`;
+            listContainer.appendChild(li);
+        });
+
+        serviceModal.classList.add('show');
+        document.body.style.overflow = 'hidden'; // Bloquear scroll fondo
     }
 
-    // ANIMATION
-    const observer = new IntersectionObserver((e) => { e.forEach(en => { if(en.isIntersecting) en.target.classList.add('active'); }); }, {threshold:0.1});
+    function closeServiceModal() {
+        serviceModal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+
+    function openLegalModal(title) { 
+        document.getElementById('legalTitle').innerText = title; 
+        legalModal.classList.add('show'); 
+    }
+    function closeLegalModal() { 
+        legalModal.classList.remove('show'); 
+    }
+
+    window.onclick = function(e) {
+        if(e.target == serviceModal) closeServiceModal();
+        if(e.target == legalModal) closeLegalModal();
+    }
+    document.addEventListener('keydown', (e) => { 
+        if(e.key === 'Escape') { closeServiceModal(); closeLegalModal(); }
+    });
+
+
+    // --- SCROLL REVEAL OPTIMIZADO ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { 
+            if(entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); 
+            }
+        });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // --- FORMULARIO OPTIMIZADO Y SEGURO ---
+    async function handleSubmit(event) {
+        event.preventDefault();
+        const form = event.target; 
+        const statusSuccess = document.getElementById("statusSuccess");
+        const statusError = document.getElementById("statusError");
+        const btn = document.getElementById("submitBtn");
+        const originalBtnText = btn.innerHTML;
+
+        // Evitar doble envío
+        if (btn.disabled) return;
+        
+        // Feedback visual de carga
+        btn.innerHTML = `<span>Enviando...</span> <i class="ph ph-spinner ph-spin"></i>`;
+        btn.style.opacity = "0.7";
+        btn.disabled = true;
+        btn.style.cursor = "not-allowed";
+
+        try {
+            const data = new FormData(form);
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                // Éxito
+                form.reset();
+                statusSuccess.style.display = "block";
+                statusError.style.display = "none";
+                
+                // Ocultar formulario suavemente tras éxito
+                form.style.opacity = "0";
+                form.style.pointerEvents = "none";
+                setTimeout(() => { form.style.display = "none"; }, 500);
+            } else {
+                // Error servidor
+                const dataJson = await response.json();
+                const errorMsg = dataJson.errors ? dataJson.errors.map(e => e.message).join(", ") : "Error en el servidor.";
+                throw new Error(errorMsg);
+            }
+        } catch (error) {
+            // Manejo de errores
+            console.error(error);
+            statusSuccess.style.display = "none";
+            statusError.innerHTML = `<strong>Error:</strong> ${error.message || "Hubo un problema de conexión."}`;
+            statusError.style.display = "block";
+        } finally {
+            // Restaurar botón si hubo error (si hubo éxito el form desaparece)
+            if (statusSuccess.style.display !== "block") {
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+                btn.style.opacity = "1";
+                btn.style.cursor = "pointer";
+            }
+        }
+    }
+    document.getElementById("contactForm").addEventListener("submit", handleSubmit);
+
+    // --- PRICING SWITCHER ---
+    window.addEventListener('load', () => {
+        const activeBtn = document.querySelector('.toggle-btn.active');
+        if(activeBtn) switchPricing('one-time', activeBtn);
+    });
+
+    function switchPricing(type, btnElement) {
+        const bg = document.getElementById('switchBg');
+        const gridOne = document.getElementById('grid-onetime');
+        const gridSub = document.getElementById('grid-sub');
+        const btns = document.querySelectorAll('.toggle-btn');
+
+        if(btnElement) {
+            bg.style.width = `${btnElement.offsetWidth}px`;
+            bg.style.left = `${btnElement.offsetLeft}px`;
+            btns.forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+
+        if(type === 'one-time') {
+            gridSub.style.display = 'none'; gridSub.classList.remove('active-grid');
+            gridOne.style.display = 'grid'; setTimeout(() => gridOne.classList.add('active-grid'), 10);
+        } else {
+            gridOne.style.display = 'none'; gridOne.classList.remove('active-grid');
+            gridSub.style.display = 'grid'; setTimeout(() => gridSub.classList.add('active-grid'), 10);
+        }
+    }
+
+    // --- FAQ & MENU ---
+    function toggleFaq(el) {
+        const isOpen = el.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(item => {
+            if(item !== el) { item.classList.remove('open'); item.querySelector('.faq-body').style.maxHeight = null; }
+        });
+        if(!isOpen) {
+            el.classList.add('open');
+            el.querySelector('.faq-body').style.maxHeight = el.querySelector('.faq-body').scrollHeight + 40 + 'px';
+        } else {
+            el.classList.remove('open');
+            el.querySelector('.faq-body').style.maxHeight = null;
+        }
+    }
+    function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+
+    // --- LÓGICA DE IA (NOX ASSISTANT) ---
+    function toggleAIChat() {
+        const chat = document.getElementById('aiChatWindow');
+        chat.classList.toggle('active');
+        
+        // En móvil, bloquear scroll de fondo cuando chat está abierto
+        if (window.innerWidth <= 900) {
+            if (chat.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        }
+    }
+
+    function handleAIEnter(e) {
+        if(e.key === 'Enter') sendAIMessage();
+    }
+
+    function sendAIMessage() {
+        const input = document.getElementById('aiUserInput');
+        const text = input.value.trim();
+        if(!text) return;
+
+        // Añadir mensaje usuario
+        addMessage(text, 'user');
+        input.value = '';
+
+        // Simular pensamiento
+        const typing = document.getElementById('aiTyping');
+        typing.style.display = 'flex';
+        
+        // Scroll al fondo
+        const container = document.getElementById('aiMessages');
+        container.scrollTop = container.scrollHeight;
+
+        setTimeout(() => {
+            typing.style.display = 'none';
+            const reply = generateAIResponse(text.toLowerCase());
+            addMessage(reply, 'bot');
+        }, 1200);
+    }
+
+    function addMessage(text, sender) {
+        const container = document.getElementById('aiMessages');
+        const typing = document.getElementById('aiTyping');
+        const div = document.createElement('div');
+        div.className = `ai-msg ${sender}`;
+        div.innerHTML = text; // Permite HTML en la respuesta
+        container.insertBefore(div, typing);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    // "CEREBRO" DE LA IA
+    function generateAIResponse(text) {
+        // Función auxiliar para cerrar chat en móvil
+        const closeOnMobile = () => {
+            if(window.innerWidth < 900) toggleAIChat();
+        };
+
+        if(text.includes('precio') || text.includes('costo') || text.includes('vale') || text.includes('plan')) {
+            closeOnMobile();
+            setTimeout(() => document.getElementById('pricing').scrollIntoView(), 500);
+            return "Nuestros planes empiezan desde <strong>650€</strong> para Landing Pages. Te llevo a la sección de inversión para que veas todas las opciones.";
+        }
+        if(text.includes('contacto') || text.includes('hablar') || text.includes('email') || text.includes('telefono')) {
+            closeOnMobile();
+            setTimeout(() => document.getElementById('contact').scrollIntoView(), 500);
+            return "Claro, aquí tienes nuestros datos. Puedes rellenar el formulario o escribirnos directamente por WhatsApp.";
+        }
+        if(text.includes('seo') || text.includes('google') || text.includes('posicionamiento')) {
+            return "Somos especialistas en SEO Técnico. Nuestro plan 'SEO Authority' (850€/mes) incluye estrategia de contenidos y linkbuilding manual. ¿Quieres que auditemos tu web actual?";
+        }
+        if(text.includes('web') || text.includes('diseño') || text.includes('tienda')) {
+            return "Diseñamos webs corporativas y e-commerce de alto rendimiento sobre Next.js. Nada de plantillas lentas. ¿Tienes ya un diseño o empezamos de cero?";
+        }
+        if(text.includes('hola') || text.includes('buenos dias')) {
+            return "¡Hola! Soy NOX. Estoy aquí para ayudarte a escalar tu negocio. ¿Buscas desarrollo, diseño o crecimiento?";
+        }
+        // Respuesta por defecto
+        return "Entiendo. Para darte una respuesta precisa, lo mejor es que hables con un ingeniero del equipo. ¿Quieres que te lleve al formulario de contacto?";
+    }
 </script>
+
 </body>
 </html>
