@@ -504,8 +504,441 @@
             opacity: 0.3;
         }
 
-        /* Rest of CSS remains the same... */
-        /* ... [The rest of existing CSS remains] ... */
+        /* === EXOTIC CONTACT SECTION - COMPLETELY COHERENT === */
+        .contact-section {
+            position: relative;
+            padding: 8rem 0;
+            background: var(--bg-void);
+            overflow: hidden;
+        }
+
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 90% 80%, rgba(0, 224, 116, 0.05) 0%, transparent 25%),
+                repeating-linear-gradient(90deg, transparent 0px, transparent 1px, rgba(212, 175, 55, 0.02) 1px, rgba(212, 175, 55, 0.02) 2px),
+                repeating-linear-gradient(0deg, transparent 0px, transparent 1px, rgba(212, 175, 55, 0.02) 1px, rgba(212, 175, 55, 0.02) 2px);
+            background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: grid-move 20s linear infinite;
+        }
+
+        .contact-section::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            filter: blur(100px);
+            z-index: 0;
+            opacity: 0.1;
+            animation: pulse-glow 8s ease-in-out infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                background-position: 0 0, 0 0, 0 0, 0 0;
+            }
+
+            100% {
+                background-position: 0 0, 0 0, 60px 60px, 60px 60px;
+            }
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                opacity: 0.1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                opacity: 0.15;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        .neural-form {
+            position: relative;
+            z-index: 2;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: var(--radius-xl);
+            padding: 4rem;
+            box-shadow:
+                0 0 100px rgba(212, 175, 55, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                0 20px 60px rgba(0, 0, 0, 0.8);
+            transition: all 0.5s var(--ease-out);
+            overflow: hidden;
+        }
+
+        .neural-form::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg,
+                    rgba(212, 175, 55, 0.8) 0%,
+                    rgba(255, 215, 0, 0.4) 25%,
+                    rgba(212, 175, 55, 0.2) 50%,
+                    transparent 75%,
+                    rgba(212, 175, 55, 0.6) 100%);
+            border-radius: var(--radius-xl);
+            z-index: -1;
+            animation: border-glow 4s ease-in-out infinite;
+        }
+
+        .neural-form::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background: conic-gradient(from 0deg at 50% 50%,
+                    rgba(212, 175, 55, 0.1) 0deg,
+                    rgba(255, 215, 0, 0.05) 90deg,
+                    rgba(212, 175, 55, 0.1) 180deg,
+                    rgba(255, 215, 0, 0.05) 270deg,
+                    rgba(212, 175, 55, 0.1) 360deg);
+            z-index: -2;
+            animation: rotate-glow 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes border-glow {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes rotate-glow {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .form-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    var(--txt-accent) 50%,
+                    transparent 100%);
+            border-radius: 2px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .form-group::before {
+            content: '↗';
+            position: absolute;
+            top: 0;
+            left: -20px;
+            color: var(--txt-accent);
+            opacity: 0;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .form-group:focus-within::before {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--txt-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .form-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--txt-accent);
+            border-radius: 50%;
+            animation: label-pulse 2s infinite;
+        }
+
+        @keyframes label-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: translateY(-50%) scale(0.8);
+            }
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            color: var(--txt-primary);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1rem;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--txt-accent);
+            background: rgba(212, 175, 55, 0.05);
+            box-shadow:
+                0 0 30px rgba(212, 175, 55, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Inter', sans-serif;
+            font-style: italic;
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23D4AF37' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1.25rem center;
+            background-size: 1rem;
+            padding-right: 3rem;
+        }
+
+        .form-textarea {
+            min-height: 180px;
+            resize: vertical;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            padding: 1.5rem;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: var(--radius-md);
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .form-checkbox:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .form-checkbox input {
+            width: 1.25rem;
+            height: 1.25rem;
+            accent-color: var(--txt-accent);
+        }
+
+        .quantum-submit {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg,
+                    var(--accent-primary) 0%,
+                    var(--accent-secondary) 100%);
+            border: none;
+            color: var(--bg-void);
+            padding: 1.5rem 3rem;
+            font-size: 1.125rem;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out);
+            box-shadow:
+                0 4px 30px rgba(212, 175, 55, 0.4),
+                0 0 60px rgba(212, 175, 55, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .quantum-submit:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow:
+                0 8px 40px rgba(212, 175, 55, 0.6),
+                0 0 80px rgba(212, 175, 55, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .quantum-submit:active {
+            transform: translateY(-2px) scale(1);
+        }
+
+        .quantum-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    rgba(255, 255, 255, 0.3) 50%,
+                    transparent 100%);
+            transition: left 0.8s var(--ease-out);
+        }
+
+        .quantum-submit:hover::before {
+            left: 100%;
+        }
+
+        .contact-portal {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            position: relative;
+        }
+
+        .contact-portal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent 0%,
+                    var(--txt-accent) 50%,
+                    transparent 100%);
+        }
+
+        .portal-node {
+            text-align: center;
+            padding: 2.5rem;
+            background: rgba(10, 10, 10, 0.7);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: var(--radius-lg);
+            transition: all 0.4s var(--ease-out);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-node:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(10, 10, 10, 0.9);
+            box-shadow:
+                0 10px 40px rgba(212, 175, 55, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .portal-node::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s var(--ease-out);
+        }
+
+        .portal-node:hover::before {
+            opacity: 1;
+        }
+
+        .node-icon {
+            font-size: 3rem;
+            color: var(--txt-accent);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: all 0.4s var(--ease-out);
+        }
+
+        .portal-node:hover .node-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .node-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.4s var(--ease-out);
+        }
+
+        .portal-node:hover .node-glow {
+            opacity: 1;
+        }
 
         /* === IMPROVED LABELS AND BADGES === */
         .label {
@@ -1193,72 +1626,6 @@
             overflow: hidden;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.75rem;
-            color: var(--txt-secondary);
-            font-size: 0.875rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .form-control {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: var(--border-thin);
-            border-radius: var(--radius-sm);
-            padding: 1rem 1.25rem;
-            color: var(--txt-primary);
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            transition: all 0.3s var(--ease-out);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--txt-primary);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
-        }
-
-        .form-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 256 256'%3E%3Cpath d='M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z'%3E%3C/path%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            background-size: 1rem;
-            padding-right: 3rem;
-        }
-
-        .form-textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .form-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-        }
-
-        .form-checkbox input {
-            width: 1.25rem;
-            height: 1.25rem;
-            accent-color: var(--txt-accent);
-        }
-
         /* === IMPROVED PREMIUM FOOTER === */
         .footer {
             background: var(--bg-panel);
@@ -1593,6 +1960,10 @@
             .process-timeline::before {
                 left: 25px;
             }
+
+            .contact-portal {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -1661,7 +2032,7 @@
                 text-align: center;
             }
 
-            .application-form {
+            .neural-form {
                 padding: 2rem;
             }
 
@@ -1681,6 +2052,11 @@
 
             .cta-section {
                 padding: 2rem;
+            }
+
+            .contact-portal {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
         }
 
@@ -1733,6 +2109,15 @@
 
             .process-timeline::before {
                 display: none;
+            }
+
+            .neural-form {
+                padding: 1.5rem;
+            }
+
+            .quantum-submit {
+                padding: 1.25rem 2rem;
+                font-size: 1rem;
             }
         }
 
@@ -2479,75 +2864,111 @@
         </div>
     </section>
 
-    <!-- Contact Form -->
-    <section class="section" id="contact">
+    <!-- Neural Network Contact Portal -->
+    <section class="section contact-section" id="contact">
         <div class="container-narrow">
             <div class="text-center mb-5">
-                <span class="label label-accent">Work With Us</span>
-                <h2 class="display-xl">Tell Us About Your Project</h2>
-                <p class="text-lead mx-auto">We only accept projects where we know we can deliver positive ROI and real
-                    impact</p>
+                <span class="label label-accent">Quantum Connection</span>
+                <h2 class="display-xl">Initiate Digital Synergy</h2>
+                <p class="text-lead mx-auto">Connect with our neural network for transformative collaboration</p>
             </div>
 
-            <form class="application-form spotlight-card" id="projectForm">
+            <form class="neural-form" id="projectForm" action="https://formspree.io/f/xgvnpjpp" method="POST">
+                <div class="form-header">
+                    <h3 class="display-sm mb-3">Project Manifestation Portal</h3>
+                    <p class="text-body">Complete the quantum field to initiate connection</p>
+                </div>
+
                 <div class="form-grid">
                     <div class="form-group">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" placeholder="Your name or company" required>
+                        <label class="form-label" for="name">Entity Identifier</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                            placeholder="Your name or corporate entity" required>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="hello@yourcompany.com" required>
+                        <label class="form-label" for="email">Quantum Communication Node</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                            placeholder="contact@webnox.online" required>
                     </div>
                 </div>
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label class="form-label">What do you need?</label>
-                        <select class="form-control form-select" required>
-                            <option value="" disabled selected>Select an option</option>
-                            <option value="web">New Website / Redesign</option>
-                            <option value="ecommerce">E-Commerce</option>
-                            <option value="branding">Branding & Design</option>
-                            <option value="partner">Monthly Subscription (Partner)</option>
-                            <option value="consulting">Consulting / Other</option>
+                        <label class="form-label" for="service">Required Manifestation</label>
+                        <select class="form-control form-select" id="service" name="service" required>
+                            <option value="" disabled selected>Select manifestation type</option>
+                            <option value="web">Digital Architecture / Redesign</option>
+                            <option value="ecommerce">Quantum Commerce System</option>
+                            <option value="branding">Cosmic Brand Identity</option>
+                            <option value="partner">Neural Subscription (Partner)</option>
+                            <option value="consulting">Strategic Consultation</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Estimated Budget (EUR)</label>
-                        <select class="form-control form-select" required>
-                            <option value="" disabled selected>Investment range</option>
-                            <option value="low">&lt; 1,000€</option>
-                            <option value="mid">1,500€ - 2,500€</option>
-                            <option value="high">2,500€ - 3,500€</option>
-                            <option value="partner">Recurring monthly budget</option>
+                        <label class="form-label" for="budget">Resource Allocation (EUR)</label>
+                        <select class="form-control form-select" id="budget" name="budget" required>
+                            <option value="" disabled selected>Select quantum field</option>
+                            <option value="low">&lt; 1,000€ Quantum I</option>
+                            <option value="mid">1,500€ - 2,500€ Quantum II</option>
+                            <option value="high">2,500€ - 3,500€ Quantum III</option>
+                            <option value="partner">Recurring Temporal Allocation</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Project Details</label>
-                    <textarea class="form-control form-textarea" rows="5"
-                        placeholder="Describe your project, objectives, timeline, and any relevant details..."
+                    <label class="form-label" for="message">Project Consciousness</label>
+                    <textarea class="form-control form-textarea" id="message" name="message" rows="6"
+                        placeholder="Describe your vision, objectives, timeline parameters, and quantum requirements..."
                         required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="form-checkbox">
-                        <input type="checkbox" required>
-                        <span class="text-small">I accept the privacy policy and the processing of my data</span>
+                        <input type="checkbox" name="privacy" required>
+                        <span class="text-body">I acknowledge the quantum entanglement protocol and consent to data
+                            processing for manifestation purposes</span>
                     </label>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-full btn-large">
-                    <span class="btn-text">Submit Request</span>
+                <button type="submit" class="quantum-submit w-full">
+                    <span class="btn-text">Activate Quantum Connection</span>
                     <div class="loader hidden"></div>
                 </button>
 
-                <p class="text-center text-small mt-3">We'll respond in less than 24 business hours</p>
+                <p class="text-center text-body mt-3">
+                    <i class="ph ph-lightning" style="color: var(--txt-accent); margin-right: 8px;"></i>
+                    Neural response within 24 temporal cycles
+                </p>
             </form>
+
+            <div class="contact-portal">
+                <div class="portal-node">
+                    <div class="node-glow"></div>
+                    <i class="ph ph-envelope-simple node-icon"></i>
+                    <h4>Quantum Mail</h4>
+                    <p class="text-body">contact@webnox.online</p>
+                    <p class="text-small mt-2">Direct neural transmission</p>
+                </div>
+
+                <div class="portal-node">
+                    <div class="node-glow"></div>
+                    <i class="ph ph-globe-hemisphere-west node-icon"></i>
+                    <h4>Cosmic Coordinates</h4>
+                    <p class="text-body">Sint Willebrord, Holanda</p>
+                    <p class="text-small mt-2">Quantum entanglement ready</p>
+                </div>
+
+                <div class="portal-node">
+                    <div class="node-glow"></div>
+                    <i class="ph ph-cpu node-icon"></i>
+                    <h4>Neural Capacity</h4>
+                    <p class="text-body">2 Slots Q1 2026</p>
+                    <p class="text-small mt-2">Quantum processing available</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -2557,8 +2978,7 @@
             <div class="footer-grid">
                 <div class="footer-column">
                     <h3>WEBNOX</h3>
-                    <p class="text-body">Exclusive digital studio specialized in web design and development for
-                        visionary brands.</p>
+                    <p class="text-body">Quantum digital studio for visionary brand manifestations.</p>
                     <div class="footer-social mt-3">
                         <a href="#" class="social-link"><i class="ph ph-instagram-logo"></i></a>
                         <a href="#" class="social-link"><i class="ph ph-linkedin-logo"></i></a>
@@ -2601,10 +3021,11 @@
             </div>
 
             <div class="footer-bottom">
-                <p class="text-small">© 2026 WEBNOX Digital Studio. All rights reserved. Madrid, Spain.</p>
+                <p class="text-small">© 2026 WEBNOX Quantum Studio. All cosmic rights reserved. Sint Willebrord,
+                    Holanda.</p>
                 <p class="text-small">
                     <span class="status-dot" style="display: inline-block; vertical-align: middle;"></span>
-                    <span>2 Slots available for Q1 2026</span>
+                    <span>2 Quantum slots available for Q1 2026</span>
                 </p>
             </div>
         </div>
@@ -2619,10 +3040,10 @@
 
             <div class="text-center p-4">
                 <i class="ph ph-check-circle" style="font-size: 4rem; color: var(--txt-success);"></i>
-                <h3 class="display-sm mt-3">Request Sent!</h3>
-                <p class="text-body mt-2">We have received your request successfully. We'll contact you in less than 24
-                    business hours to discuss your project details.</p>
-                <button class="btn btn-primary mt-4" id="modalConfirm">Understood</button>
+                <h3 class="display-sm mt-3">Quantum Connection Established!</h3>
+                <p class="text-body mt-2">Neural transmission received. We'll initiate contact within 24 temporal cycles
+                    to discuss your quantum requirements.</p>
+                <button class="btn btn-primary mt-4" id="modalConfirm">Acknowledge</button>
             </div>
         </div>
     </div>
@@ -2633,7 +3054,7 @@
     <script>
         // === IMPROVED INITIAL CONFIGURATION ===
         document.addEventListener('DOMContentLoaded', function () {
-            console.log('WEBNOX Premium v4.0 - Loaded successfully');
+            console.log('WEBNOX Quantum v4.0 - Neural network active');
 
             // Initialize essential components
             initNavbar();
@@ -2642,15 +3063,106 @@
             initCounters();
             initPricing();
             initProjects();
-            initFAQ(); // New function for FAQ
+            initFAQ();
 
             // Initialize non-critical components later
             setTimeout(() => {
                 initCursor();
                 initAnimations();
                 initScrollAnimations();
+                initNeuralEffects();
             }, 100);
         });
+
+        // === NEURAL NETWORK EFFECTS ===
+        function initNeuralEffects() {
+            const portalNodes = document.querySelectorAll('.portal-node');
+            const form = document.querySelector('.neural-form');
+
+            // Portal node hover effects
+            portalNodes.forEach(node => {
+                node.addEventListener('mouseenter', () => {
+                    const icon = node.querySelector('.node-icon');
+                    icon.style.transform = 'scale(1.2) rotate(10deg)';
+                    icon.style.color = '#FFD700';
+                });
+
+                node.addEventListener('mouseleave', () => {
+                    const icon = node.querySelector('.node-icon');
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                    icon.style.color = 'var(--txt-accent)';
+                });
+            });
+
+            // Form input effects
+            const inputs = form.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    const label = input.previousElementSibling;
+                    if (label && label.classList.contains('form-label')) {
+                        label.style.color = 'var(--txt-accent)';
+                        label.querySelector('::before').style.animation = 'label-pulse 1s infinite';
+                    }
+                });
+
+                input.addEventListener('blur', () => {
+                    const label = input.previousElementSibling;
+                    if (label && label.classList.contains('form-label')) {
+                        label.style.color = '';
+                    }
+                });
+            });
+
+            // Add neural particles to contact section
+            createNeuralParticles();
+        }
+
+        function createNeuralParticles() {
+            const contactSection = document.querySelector('.contact-section');
+            if (!contactSection) return;
+
+            // Create particle container
+            const particleContainer = document.createElement('div');
+            particleContainer.className = 'neural-particles';
+            particleContainer.style.position = 'absolute';
+            particleContainer.style.top = '0';
+            particleContainer.style.left = '0';
+            particleContainer.style.width = '100%';
+            particleContainer.style.height = '100%';
+            particleContainer.style.zIndex = '1';
+            particleContainer.style.pointerEvents = 'none';
+            contactSection.appendChild(particleContainer);
+
+            // Create particles
+            for (let i = 0; i < 15; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                particle.style.width = Math.random() * 3 + 1 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = 'var(--txt-accent)';
+                particle.style.borderRadius = '50%';
+                particle.style.opacity = Math.random() * 0.3 + 0.1;
+                particle.style.filter = 'blur(1px)';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+
+                // Animation
+                particle.animate([
+                    { transform: 'translate(0, 0)', opacity: particle.style.opacity },
+                    {
+                        transform: `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: Math.random() * 3000 + 2000,
+                    iterations: Infinity,
+                    direction: 'alternate',
+                    easing: 'ease-in-out'
+                });
+
+                particleContainer.appendChild(particle);
+            }
+        }
 
         // === NEW: FAQ SYSTEM ===
         function initFAQ() {
@@ -2719,17 +3231,19 @@
             animateCursor();
 
             // Hover effects
-            document.querySelectorAll('a, button, .btn, .project-toggle, .faq-toggle').forEach(el => {
+            document.querySelectorAll('a, button, .btn, .project-toggle, .faq-toggle, .portal-node, .quantum-submit').forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     cursorOutline.style.width = '50px';
                     cursorOutline.style.height = '50px';
                     cursorOutline.style.borderColor = 'var(--accent-primary)';
+                    cursorOutline.style.background = 'rgba(212, 175, 55, 0.1)';
                 });
 
                 el.addEventListener('mouseleave', () => {
                     cursorOutline.style.width = '36px';
                     cursorOutline.style.height = '36px';
                     cursorOutline.style.borderColor = '';
+                    cursorOutline.style.background = '';
                 });
             });
         }
@@ -2816,7 +3330,7 @@
 
         // === IMPROVED SCROLL ANIMATIONS ===
         function initScrollAnimations() {
-            const elements = document.querySelectorAll('.project-card, .service-card, .pricing-card, .tech-card, .testimonial-card, .process-step');
+            const elements = document.querySelectorAll('.project-card, .service-card, .pricing-card, .tech-card, .testimonial-card, .process-step, .portal-node');
 
             const scrollObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -2883,14 +3397,14 @@
             });
         }
 
-        // === IMPROVED CONTACT FORM ===
+        // === IMPROVED CONTACT FORM WITH FORMSPREE ===
         function initForm() {
             const form = document.getElementById('projectForm');
             const submitBtn = form.querySelector('button[type="submit"]');
             const btnText = submitBtn.querySelector('.btn-text');
             const loader = submitBtn.querySelector('.loader');
 
-            form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
                 // Validation
@@ -2904,25 +3418,46 @@
                 });
 
                 if (!isValid) {
-                    showNotification('Please complete all required fields', 'error');
+                    showNotification('Complete all quantum fields', 'error');
                     return;
                 }
 
-                // Simulate submission
+                // Show loading state
                 btnText.classList.add('hidden');
                 loader.classList.remove('hidden');
                 submitBtn.disabled = true;
+                submitBtn.style.background = 'linear-gradient(135deg, #666 0%, #444 100%)';
 
-                setTimeout(() => {
-                    document.getElementById('confirmationModal').classList.add('active');
-                    form.reset();
+                try {
+                    const formData = new FormData(form);
 
+                    // Send to Formspree
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Show success modal
+                        document.getElementById('confirmationModal').classList.add('active');
+                        form.reset();
+                        showNotification('Quantum connection established!', 'success');
+                    } else {
+                        throw new Error('Neural transmission failed');
+                    }
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                    showNotification('Quantum interference detected. Retry transmission.', 'error');
+                } finally {
+                    // Reset button state
                     btnText.classList.remove('hidden');
                     loader.classList.add('hidden');
                     submitBtn.disabled = false;
-
-                    showNotification('Request sent successfully', 'success');
-                }, 1500);
+                    submitBtn.style.background = '';
+                }
             });
         }
 
@@ -3052,11 +3587,11 @@
 
         // === ERROR HANDLING ===
         window.addEventListener('error', (e) => {
-            console.error('Error:', e.error);
+            console.error('Neural error:', e.error);
         });
 
         // === STYLIZED CONSOLE LOG ===
-        console.log(`%c⚡ WEBNOX Premium v4.0%c\nNew sections • No images • FAQ • Process • Testimonials`,
+        console.log(`%c⚡ WEBNOX Quantum v4.0%c\nNeural Network Active • Quantum Contact • Sint Willebrord, Holanda`,
             'background: linear-gradient(90deg, #D4AF37, #FFD700); color: black; padding: 10px 20px; border-radius: 4px; font-size: 18px; font-weight: bold;',
             'color: #D4AF37; font-size: 12px; margin-top: 10px; display: block;');
     </script>
