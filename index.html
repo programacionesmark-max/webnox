@@ -79,7 +79,8 @@
         }
 
         html {
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
+            /* Smooth scroll activated */
             overflow-x: hidden;
             height: 100%;
         }
@@ -694,6 +695,26 @@
             grid-template-columns: 1fr 2fr;
             gap: 4rem;
             margin-top: 4rem;
+        }
+
+        /* === CORRECCIÓN FAQ MÓVIL === */
+        @media (max-width: 900px) {
+            .faq-layout {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .faq-sidebar {
+                position: relative;
+                top: 0;
+                order: 2;
+                /* Poner la caja al final en móvil */
+                margin-top: 2rem;
+            }
+
+            .faq-container {
+                order: 1;
+            }
         }
 
         .faq-sidebar {
@@ -1829,6 +1850,8 @@
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.3s var(--ease-out);
+            cursor: pointer;
+            /* Ensure pointer shows clickable */
         }
 
         .footer-links a:hover {
@@ -1951,6 +1974,7 @@
             animation-delay: 0.4s;
         }
 
+        /* === MODALS === */
         .modal {
             position: fixed;
             top: 0;
@@ -1978,7 +2002,8 @@
             border: var(--border-thin);
             border-radius: var(--radius-lg);
             padding: 3rem;
-            max-width: 500px;
+            max-width: 600px;
+            /* Wider for legal text */
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
@@ -2000,6 +2025,7 @@
             font-size: 1.5rem;
             cursor: pointer;
             transition: color 0.3s;
+            z-index: 10;
         }
 
         .modal-close:hover {
@@ -3641,8 +3667,8 @@
                     <div
                         style="font-family: 'Space Grotesk', monospace; font-size: 0.8rem; color: var(--txt-muted); border-left: 2px solid var(--border-accent); padding-left: 1rem;">
                         <p style="margin-bottom: 4px;"><strong>HQ:</strong> Sint Willebrord, NL</p>
-                        <p style="margin-bottom: 4px;"><strong>KvK:</strong> [27331411]</p>
-                        <p style="margin-bottom: 0;"><strong>BTW:</strong> [NL004107326B01]</p>
+                        <p style="margin-bottom: 4px;"><strong>KvK:</strong> [20245735]</p>
+                        <p style="margin-bottom: 0;"><strong>BTW:</strong> [NL004706818B02]</p>
                     </div>
 
                     <div class="footer-social mt-4">
@@ -3678,10 +3704,11 @@
                 <div class="footer-column">
                     <h3>Legal (NL)</h3>
                     <ul class="footer-links">
-                        <li><a href="#" style="opacity: 0.7;">Algemene Voorwaarden</a></li>
-                        <li><a href="#" style="opacity: 0.7;">Privacy Statement (AVG)</a></li>
-                        <li><a href="#" style="opacity: 0.7;">Cookie Policy</a></li>
-                        <li><a href="#" style="opacity: 0.7;">Disclaimer</a></li>
+                        <li><a onclick="openLegalModal('General Terms (Algemene Voorwaarden)')">Algemene Voorwaarden</a>
+                        </li>
+                        <li><a onclick="openLegalModal('Privacy Statement (AVG)')">Privacy Statement (AVG)</a></li>
+                        <li><a onclick="openLegalModal('Cookie Policy')">Cookie Policy</a></li>
+                        <li><a onclick="openLegalModal('Disclaimer')">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
@@ -3701,7 +3728,7 @@
 
     <div class="modal" id="confirmationModal">
         <div class="modal-content spotlight-card">
-            <button class="modal-close" id="modalClose">
+            <button class="modal-close" onclick="closeModal('confirmationModal')">
                 <i class="ph ph-x"></i>
             </button>
 
@@ -3710,7 +3737,25 @@
                 <h3 class="display-sm mt-3">Quantum Connection Established!</h3>
                 <p class="text-body mt-2">Neural transmission received. We'll initiate contact within 24 temporal cycles
                     to discuss your quantum requirements.</p>
-                <button class="btn btn-primary mt-4" id="modalConfirm">Acknowledge</button>
+                <button class="btn btn-primary mt-4" onclick="closeModal('confirmationModal')">Acknowledge</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="legalModal">
+        <div class="modal-content spotlight-card" style="text-align: left;">
+            <button class="modal-close" onclick="closeModal('legalModal')">
+                <i class="ph ph-x"></i>
+            </button>
+            <h3 class="display-sm mb-3" id="legalModalTitle">Legal Document</h3>
+            <div class="text-body text-small" style="line-height: 1.8; color: var(--txt-secondary);">
+                <p class="mb-3">This is a placeholder for the official legal document tailored for Dutch Law (Nederlands
+                    Recht).</p>
+                <p class="mb-3"><strong>Status:</strong> Pending Final Draft</p>
+                <p class="mb-3">Once the final PDFs are ready (General Terms and Conditions filed with the Chamber of
+                    Commerce / KvK), they will be linked directly here or available for download.</p>
+                <p>For urgent legal inquiries, please contact us directly at <span
+                        style="color: var(--txt-accent);">legal@webnox.online</span>.</p>
             </div>
         </div>
     </div>
@@ -3725,10 +3770,10 @@
             initPreloader();
             initNavigationLogic();
             initForm();
-            initModals();
+            initModals(); // Updated to handle multiple modals
             initCounters();
             initPricing();
-            initProjects(); // Initialize Projects Logic
+            initProjects();
             initFAQ();
             initMagneticButtons();
             init3DTilt();
@@ -4114,21 +4159,25 @@
             };
         }
 
+        // === UPDATED MODAL LOGIC ===
         function initModals() {
-            const modal = document.getElementById('confirmationModal');
-            const modalClose = document.getElementById('modalClose');
-            const modalConfirm = document.getElementById('modalConfirm');
-            function closeModal() { modal.classList.remove('active'); }
-            modalClose.addEventListener('click', closeModal);
-            modalConfirm.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
+            window.openLegalModal = function (title) {
+                const modal = document.getElementById('legalModal');
+                const modalTitle = document.getElementById('legalModalTitle');
+                modalTitle.textContent = title;
+                modal.classList.add('active');
+            }
+
+            window.closeModal = function (modalId) {
+                document.getElementById(modalId).classList.remove('active');
+            }
+
+            // Close when clicking outside
+            window.onclick = function (event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.classList.remove('active');
                 }
-            });
+            }
         }
 
         function initCounters() {
