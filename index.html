@@ -1785,11 +1785,27 @@
             margin-top: auto;
         }
 
+        /* MODIFICACIÓN DE FOOTER GRID PARA RESPONSIVE 
+           (Mobile 1 col, Tablet 2 cols, Desktop 4 cols)
+        */
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 3rem;
+            grid-template-columns: 1fr;
+            /* Mobile first */
+            gap: 2.5rem;
             margin-bottom: 3rem;
+        }
+
+        @media (min-width: 640px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .footer-column h3 {
@@ -1827,6 +1843,19 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
+        }
+
+        /* AJUSTE MOBILE PARA BOTTOM FOOTER */
+        @media (max-width: 640px) {
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .footer-social {
+                justify-content: flex-start;
+            }
         }
 
         .footer-social {
@@ -3600,57 +3629,72 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
+
                 <div class="footer-column">
-                    <h3>WEBNOX</h3>
-                    <p class="text-body">Quantum digital studio for visionary brand manifestations.</p>
-                    <div class="footer-social mt-3">
-                        <a href="#" class="social-link"><i class="ph ph-instagram-logo"></i></a>
-                        <a href="#" class="social-link"><i class="ph ph-linkedin-logo"></i></a>
-                        <a href="#" class="social-link"><i class="ph ph-twitter-logo"></i></a>
-                        <a href="#" class="social-link"><i class="ph ph-github-logo"></i></a>
+                    <a href="#" class="navbar-logo"
+                        style="display:inline-block; margin-bottom: 1rem; color: white; text-decoration: none;">WEBNOX</a>
+                    <p class="text-body text-small" style="max-width: 280px; margin-bottom: 1.5rem;">
+                        Elite Digital Partner.<br>
+                        Engineering assets out of Sint Willebrord.
+                    </p>
+
+                    <div
+                        style="font-family: 'Space Grotesk', monospace; font-size: 0.8rem; color: var(--txt-muted); border-left: 2px solid var(--border-accent); padding-left: 1rem;">
+                        <p style="margin-bottom: 4px;"><strong>HQ:</strong> Sint Willebrord, NL</p>
+                        <p style="margin-bottom: 4px;"><strong>KvK:</strong> [27331411]</p>
+                        <p style="margin-bottom: 0;"><strong>BTW:</strong> [NL004107326B01]</p>
+                    </div>
+
+                    <div class="footer-social mt-4">
+                        <a href="#" class="social-link" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+                        <a href="#" class="social-link" aria-label="LinkedIn"><i class="ph ph-linkedin-logo"></i></a>
+                        <a href="#" class="social-link" aria-label="X (Twitter)"><i class="ph ph-twitter-logo"></i></a>
                     </div>
                 </div>
 
                 <div class="footer-column">
-                    <h3>Services</h3>
+                    <h3>Sitemap</h3>
                     <ul class="footer-links">
-                        <li><a href="#" onclick="activateSection('services'); return false;">Design Partner</a></li>
-                        <li><a href="#" onclick="activateSection('services'); return false;">Web Development</a></li>
-                        <li><a href="#" onclick="activateSection('services'); return false;">Growth & SEO</a></li>
-                        <li><a href="#" onclick="activateSection('pricing'); return false;">Pricing</a></li>
+                        <li><a href="#home" onclick="activateSection('home'); return false;">Home</a></li>
+                        <li><a href="#services" onclick="activateSection('services'); return false;">Services</a></li>
+                        <li><a href="#projects" onclick="activateSection('projects'); return false;">Selected Work</a>
+                        </li>
+                        <li><a href="#process" onclick="activateSection('process'); return false;">Our Process</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
-                    <h3>Company</h3>
+                    <h3>Expertise</h3>
                     <ul class="footer-links">
-                        <li><a href="#" onclick="activateSection('projects'); return false;">Projects</a></li>
-                        <li><a href="#" onclick="activateSection('process'); return false;">Our Process</a></li>
-                        <li><a href="#" onclick="activateSection('technologies'); return false;">Technologies</a></li>
-                        <li><a href="#" onclick="activateSection('testimonials'); return false;">Testimonials</a></li>
-                        <li><a href="#" onclick="activateSection('faq'); return false;">FAQ</a></li>
-                        <li><a href="#" onclick="activateSection('contact'); return false;">Contact</a></li>
+                        <li><a href="#" onclick="activateSection('services'); return false;">Strategic Design</a></li>
+                        <li><a href="#" onclick="activateSection('services'); return false;">Next.js Development</a>
+                        </li>
+                        <li><a href="#" onclick="activateSection('services'); return false;">E-commerce Growth</a></li>
+                        <li><a href="#pricing" onclick="activateSection('pricing'); return false;">Partnership Plans</a>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="footer-column">
-                    <h3>Legal</h3>
+                    <h3>Legal (NL)</h3>
                     <ul class="footer-links">
-                        <li><a href="#privacy">Privacy Policy</a></li>
-                        <li><a href="#cookies">Cookie Policy</a></li>
-                        <li><a href="#terms">Terms & Conditions</a></li>
-                        <li><a href="#notice">Legal Notice</a></li>
+                        <li><a href="#" style="opacity: 0.7;">Algemene Voorwaarden</a></li>
+                        <li><a href="#" style="opacity: 0.7;">Privacy Statement (AVG)</a></li>
+                        <li><a href="#" style="opacity: 0.7;">Cookie Policy</a></li>
+                        <li><a href="#" style="opacity: 0.7;">Disclaimer</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p class="text-small">© 2026 WEBNOX Quantum Studio. All cosmic rights reserved. Sint Willebrord,
-                    Holanda.</p>
                 <p class="text-small">
-                    <span class="status-dot" style="display: inline-block; vertical-align: middle;"></span>
-                    <span>2 Quantum slots available for Q1 2026</span>
+                    &copy; 2026 WEBNOX. Registered in The Netherlands.
                 </p>
+                <div class="text-small">
+                    <span class="status-dot"
+                        style="display: inline-block; vertical-align: middle; margin-right: 8px;"></span>
+                    <span style="color: var(--txt-success);">Operational from North Brabant</span>
+                </div>
             </div>
         </div>
     </footer>
