@@ -257,7 +257,7 @@
             }
         }
 
-        /* === TILT & SLOGAN === */
+        /* === TILT === */
         .tilt-card {
             transform-style: preserve-3d;
             transform: perspective(1000px);
@@ -266,48 +266,6 @@
 
         .tilt-card-inner {
             transition: transform 0.1s ease-out;
-        }
-
-        .slogan-rotator {
-            display: inline-block;
-            position: relative;
-            height: 1.2em;
-            overflow: hidden;
-            vertical-align: bottom;
-            width: 100%;
-        }
-
-        .slogan-text {
-            display: block;
-            color: var(--txt-accent);
-            animation: rotate-slogan 8s infinite cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        @keyframes rotate-slogan {
-
-            0%,
-            20% {
-                transform: translateY(0);
-            }
-
-            25%,
-            45% {
-                transform: translateY(-100%);
-            }
-
-            50%,
-            70% {
-                transform: translateY(-200%);
-            }
-
-            75%,
-            95% {
-                transform: translateY(-300%);
-            }
-
-            100% {
-                transform: translateY(-400%);
-            }
         }
 
         /* === DECORATIONS === */
@@ -2135,227 +2093,6 @@
             }
         }
 
-        /* === IMPROVED RESPONSIVE DESIGN === */
-        @media (max-width: 1024px) {
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .process-timeline::before {
-                left: 25px;
-            }
-
-            .contact-portal {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .faq-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .faq-sidebar {
-                position: relative;
-                top: 0;
-                margin-bottom: 2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            html {
-                font-size: 14px;
-            }
-
-            .container {
-                padding: 0 1.5rem;
-            }
-
-            .section {
-                padding: 3rem 0;
-            }
-
-            .display-mega {
-                font-size: clamp(2.5rem, 10vw, 3.5rem);
-            }
-
-            .display-xl {
-                font-size: clamp(2rem, 8vw, 3rem);
-            }
-
-            .navbar-menu {
-                position: fixed;
-                top: var(--header-height);
-                left: 0;
-                width: 100%;
-                background: var(--bg-panel);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1.5rem;
-                transform: translateY(-100%);
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.4s var(--ease-out);
-                border-bottom: var(--border-thin);
-                height: auto;
-                max-height: calc(100vh - var(--header-height));
-                overflow-y: auto;
-            }
-
-            .navbar-menu.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .mobile-toggle {
-                display: block;
-            }
-
-            .form-grid,
-            .pricing-grid,
-            .services-grid,
-            .tech-grid,
-            .footer-grid,
-            .contact-portal {
-                grid-template-columns: 1fr !important;
-            }
-
-            /* Hero Stats - Keep as 2x2 grid */
-            .hero-stats {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 1.5rem;
-                justify-content: center;
-                text-align: center;
-            }
-
-            .stat-item {
-                min-width: auto;
-                align-items: center;
-            }
-
-            .stat-value {
-                font-size: 2rem;
-            }
-
-            .neural-form {
-                padding: 1.5rem;
-            }
-
-            .form-control {
-                font-size: 16px;
-            }
-
-            .process-timeline::before {
-                left: 20px;
-            }
-
-            .step-number {
-                width: 50px;
-                height: 50px;
-                font-size: 1rem;
-            }
-
-            .cta-section {
-                padding: 2rem;
-            }
-
-            .contact-section {
-                padding: 4rem 0;
-            }
-
-            .pricing-switch {
-                flex-direction: column;
-                width: 100%;
-                gap: 0.5rem;
-                border-radius: var(--radius-md);
-            }
-
-            .pricing-toggle {
-                width: 100%;
-                border-radius: var(--radius-md);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .btn-group {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-            }
-
-            .card,
-            .service-card,
-            .pricing-card {
-                padding: 1.5rem;
-            }
-
-            .modal-content {
-                padding: 1.5rem;
-                width: 95%;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-
-            .process-timeline {
-                gap: 2rem;
-            }
-
-            .process-step {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .process-timeline::before {
-                display: none;
-            }
-
-            .quantum-submit {
-                padding: 1.25rem 2rem;
-                font-size: 1rem;
-            }
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-void);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--txt-muted);
-            border-radius: var(--radius-full);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--txt-secondary);
-        }
-
-        ::selection {
-            background: var(--txt-accent);
-            color: var(--bg-void);
-            text-shadow: none;
-        }
-
-        ::-moz-selection {
-            background: var(--txt-accent);
-            color: var(--bg-void);
-            text-shadow: none;
-        }
-
         /* === PREMIUM PROJECTS RELOADED === */
         .projects-section {
             position: relative;
@@ -2389,7 +2126,6 @@
         /* Card Container */
         .premium-card {
             background: rgba(17, 17, 17, 0.6);
-            /* Adjusted to match theme */
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             overflow: hidden;
@@ -2632,6 +2368,148 @@
                 flex-direction: row;
             }
         }
+
+        /* === FIX: HERO MOBILE OPTIMIZATION === */
+        @media (max-width: 768px) {
+
+            /* 1. Ajustar el contenedor para que no se corte arriba */
+            #home.hero {
+                align-items: flex-start;
+                /* Evita centrado vertical forzado que corta contenido */
+                padding-top: 140px;
+                /* Más espacio para que la navbar no tape el texto */
+                padding-bottom: 60px;
+                min-height: auto;
+                /* Permite que crezca si el contenido es largo */
+                height: auto;
+            }
+
+            /* 2. Reducir drásticamente el tamaño del título gigante */
+            .display-mega {
+                font-size: 2.8rem;
+                /* Mucho más pequeño que los 3.5rem originales */
+                line-height: 1.1;
+                margin-bottom: 1rem;
+                word-wrap: break-word;
+            }
+
+            /* 4. Ajustar el texto descriptivo */
+            .text-lead {
+                font-size: 1rem;
+                line-height: 1.5;
+                max-width: 100%;
+                padding-right: 0;
+            }
+
+            /* 5. CORRECCIÓN DE LOS BOTONES: Organizar y dar contraste */
+            .hero .btn-group {
+                flex-direction: column;
+                width: 100%;
+                gap: 15px;
+                /* Más espacio entre botones */
+                margin-top: 2rem;
+            }
+
+            .hero .btn {
+                width: 100%;
+                /* Ancho completo */
+                justify-content: center;
+                padding: 1.2rem;
+                /* Zona táctil más grande */
+                font-size: 1rem;
+                border-radius: 12px;
+            }
+
+            /* Forzar estilos visibles en móvil */
+            .hero .btn-primary {
+                background: #FFFFFF !important;
+                color: #000000 !important;
+                border: 1px solid #FFFFFF !important;
+                font-weight: 700;
+            }
+
+            .hero .btn-outline {
+                background: rgba(255, 255, 255, 0.05) !important;
+                border: 1px solid rgba(255, 255, 255, 0.4) !important;
+                color: #FFFFFF !important;
+            }
+
+            /* 6. Arreglar las estadísticas (Grid 2x2 limpio) */
+            .hero-stats {
+                margin-top: 2.5rem;
+                padding-top: 1.5rem;
+                gap: 1.5rem;
+                grid-template-columns: 1fr 1fr;
+                /* Forzar 2 columnas */
+            }
+
+            .stat-value {
+                font-size: 1.75rem;
+                /* Números más pequeños */
+            }
+
+            .stat-label {
+                font-size: 0.7rem;
+            }
+
+            /* 7. Controlar la aurora de fondo para que no moleste */
+            .hero-aurora {
+                width: 100%;
+                height: 50vh;
+                top: 30%;
+                opacity: 0.6;
+            }
+
+            /* === MOBILE MENU CONFIGURATION (Hamburger) === */
+            .mobile-toggle {
+                display: block;
+                z-index: 1002;
+                /* Encima del overlay */
+            }
+
+            .navbar-menu {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(5, 5, 5, 0.98);
+                /* Fondo casi opaco */
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 1001;
+            }
+
+            .navbar-menu.active {
+                transform: translateX(0);
+            }
+
+            .navbar-link {
+                font-size: 1.5rem;
+                color: var(--txt-primary);
+            }
+
+            .navbar-menu .btn {
+                width: 80%;
+                text-align: center;
+            }
+        }
+
+        /* Ajuste específico para móviles muy pequeños (iPhone SE, etc) */
+        @media (max-width: 380px) {
+            .display-mega {
+                font-size: 2.2rem;
+            }
+
+            .text-lead {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 
@@ -2692,14 +2570,8 @@
                     </div>
 
                     <h1 class="display-mega gpu-accelerated" id="hero-slogan">
-                        <div class="word-reveal">High-Performance</div><br>
-                        <div class="slogan-rotator">
-                            <span class="slogan-text gradient-text">Digital Assets.</span>
-                            <span class="slogan-text gradient-text">Revenue Systems.</span>
-                            <span class="slogan-text gradient-text">Scalable Tech.</span>
-                            <span class="slogan-text gradient-text">Future Brands.</span>
-                            <span class="slogan-text gradient-text">Digital Assets.</span>
-                        </div>
+                        <div class="animate-fade-up">Ingeniería Invisible.</div>
+                        <div class="gradient-text animate-fade-up animate-delay-2">Impacto Visible.</div>
                     </h1>
 
                     <p class="text-lead animate-fade-up animate-delay-2 gpu-accelerated">
@@ -2716,15 +2588,6 @@
                                 style="color: var(--txt-accent)"></i> For Established SMEs</span>
                         <span class="flex items-center gap-2"><i class="ph ph-check"
                                 style="color: var(--txt-accent)"></i> 100% ROI Focused</span>
-                    </div>
-
-                    <div class="btn-group animate-fade-up animate-delay-3 gpu-accelerated">
-                        <a href="#projects" class="btn btn-primary btn-large magnetic-btn" data-target="projects">View
-                            Projects</a>
-                        <a href="#pricing" class="btn btn-outline btn-large magnetic-btn" data-target="pricing">View
-                            Plans</a>
-                        <a href="#contact" class="btn btn-outline btn-large magnetic-btn"
-                            data-target="contact">Contact</a>
                     </div>
 
                     <div class="hero-stats animate-fade-up animate-delay-4">
@@ -3821,7 +3684,7 @@
             initModals();
             initCounters();
             initPricing();
-            initProjects(); // Initialize Projects Logic (Old one for safety)
+            initProjects(); // Initialize Projects Logic
             initFAQ();
             initMagneticButtons();
             init3DTilt();
@@ -4089,9 +3952,9 @@
             });
         }
 
-        // === 🔧 NEW PROJECTS TOGGLE LOGIC (REPLACES OLD) ===
+        // === PROJECTS TOGGLE LOGIC ===
         function initProjects() {
-            // Placeholder in case we need init logic for projects later
+            // Placeholder logic if needed
         }
 
         // Exposed function for the HTML onclick events
